@@ -18,14 +18,11 @@
             <asp:RegularExpressionValidator ID="rexp" runat="server" ControlToValidate="FileTransfer" ErrorMessage="Somente .xls" ValidationExpression="(.*\.([Xx][Ll][Ss])$)"></asp:RegularExpressionValidator>
             <asp:FileUpload ID="FileTransfer" Width ="600" runat="server" /> <br />
 
-            <asp:Button ID="btnProcessar" runat="server" Text="Processar" OnClick="btnProcessar_Click" /> 
-            <asp:GridView ID="gridTeste" runat="server" Width="984px">
-            </asp:GridView>
-            <br />
+            <asp:Button ID="btnProcessar" runat="server" Text="Processar" OnClick="btnProcessar_Click" /> <br />
 
             <asp:Label ID="lblStatusUpload" runat="server" Text=""></asp:Label> <br />
 
-            <asp:GridView Width ="900px" ID="gridPassageiros" runat="server" AutoGenerateColumns="False">
+            <asp:GridView Width ="1145px" ID="gridPassageiros" runat="server" AutoGenerateColumns="False">
                 <Columns>
                     <asp:BoundField HeaderStyle-Width ="150" DataField="NumeroVoo" HeaderText="Número Vôo" />
                     <asp:BoundField HeaderStyle-Width ="150" DataField="HorarioSaida" HeaderText="Horário Saída" />

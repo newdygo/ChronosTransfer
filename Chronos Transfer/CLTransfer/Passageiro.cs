@@ -72,7 +72,7 @@ namespace Chronos_Transfer.CLTransfer
 
         #endregion
 
-        public void AbrirArquivo(String _DataSource, GridView _GridView, GridView _GridTeste, ref Passageiro _Pass)
+        public void AbrirArquivo(String _DataSource, GridView _GridView, ref Passageiro _Pass)
         {
             List<Passageiro> _Passageiros = new List<Passageiro>();
             DataTable _Table = new DataTable();
@@ -94,10 +94,6 @@ namespace Chronos_Transfer.CLTransfer
                         connection.Open();                       
 
                         _Table.Load(command.ExecuteReader());
-
-                        _GridTeste.DataSource = _Table;
-
-                        _GridTeste.DataBind();
                     }
                     catch (Exception ex)
                     {
@@ -114,7 +110,9 @@ namespace Chronos_Transfer.CLTransfer
                         Pax.Nome = Linha[0].ToString();
                         Pax.DocumentoIdentificacao = Linha[1].ToString();
 
-                        Pax.DataC = DateTime.Now.AddHours(new Random().Next(1000)); //Convert.ToDateTime(Linha[2].ToString().Split('\n').Last().ToString());
+                        Random ppp = new Random();
+
+                        Pax.DataC = DateTime.Now.AddHours(ppp.Next(1000)); //Convert.ToDateTime(Linha[2].ToString().Split('\n').Last().ToString());
                         Pax.CidadeOrigemC = Linha[3].ToString().Split('\n').Last().ToString();
                         Pax.CidadeDestinoC = Linha[4].ToString().Split('\n').Last().ToString();
                         Pax.CompanhiaAereaC = Linha[5].ToString().Split('\n').Last().ToString();
@@ -122,7 +120,7 @@ namespace Chronos_Transfer.CLTransfer
                         Pax.HorarioSaidaC = Pax.DataC.AddMinutes(-320);  //Convert.ToDateTime(Linha[7].ToString().Split('\n').First().ToString());
                         Pax.HorarioChegadaC = Pax.HorarioSaidaC.AddMinutes(90); // Convert.ToDateTime(Linha[8].ToString().Split('\n').Last().ToString());
 
-                        Pax.DataP = DateTime.Now.AddHours(new Random().Next(1000)); //Convert.ToDateTime(Linha[10].ToString().Split('\n').Last().ToString());
+                        Pax.DataP = DateTime.Now.AddHours(ppp.Next(1000)); //Convert.ToDateTime(Linha[10].ToString().Split('\n').Last().ToString());
                         Pax.CidadeOrigemP = Linha[11].ToString().Split('\n').Last().ToString();
                         Pax.CidadeDestinoP = Linha[12].ToString().Split('\n').Last().ToString();
                         Pax.CompanhiaAereaP = Linha[13].ToString().Split('\n').Last().ToString();
