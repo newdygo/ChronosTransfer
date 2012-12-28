@@ -20,21 +20,21 @@ namespace Chronos_Transfer
         {
             if (FileTransfer.HasFile)
             {
+                Passageiro _Passageiro = new Passageiro();
+
                 try
                 {
                     String _FileName = Path.GetTempPath() + FileTransfer.FileName;
 
                     FileTransfer.SaveAs(_FileName);
 
-                    lblStatusUpload.Text = "Upload status: File uploaded!";
+                    lblStatusUpload.Text = "Upload status: File uploaded!";                    
 
-                    Passageiro _Passageiro = new Passageiro();
-
-                    _Passageiro.AbrirArquivo(_FileName, gridPassageiros);
+                    _Passageiro.AbrirArquivo(_FileName, gridPassageiros, ref _Passageiro);
                 }
                 catch (Exception ex)
                 {
-                    lblStatusUpload.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
+                    lblStatusUpload.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message + " " + _Passageiro.Nome;
                 }
             }
         }

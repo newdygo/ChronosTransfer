@@ -72,7 +72,7 @@ namespace Chronos_Transfer.CLTransfer
 
         #endregion
 
-        public void AbrirArquivo(String _DataSource, GridView _GridView)
+        public void AbrirArquivo(String _DataSource, GridView _GridView, ref Passageiro _Pass)
         {
             List<Passageiro> _Passageiros = new List<Passageiro>();
             DataTable _Table = new DataTable();
@@ -100,14 +100,13 @@ namespace Chronos_Transfer.CLTransfer
                         Console.WriteLine(ex.Message);
                     }
                 }
-                int valor = 0;
+
+                Passageiro Pax = new Passageiro();
 
                 foreach (DataRow Linha in _Table.Rows)
                 {
                     try
                     {
-                        Passageiro Pax = new Passageiro();
-
                         Pax.Nome = Linha[0].ToString();
                         Pax.DocumentoIdentificacao = Linha[1].ToString();
 
@@ -129,11 +128,12 @@ namespace Chronos_Transfer.CLTransfer
 
                         _Passageiros.Add(Pax);
 
-                        valor = _Table.Rows.IndexOf(Linha);
+                        Pax = new Passageiro();
                     }
                     catch (Exception ex)
-                    {   
-                        throw;
+                    {
+                        _Pass = Pax;
+                        throw ex;
                     }                    
                 }
 
