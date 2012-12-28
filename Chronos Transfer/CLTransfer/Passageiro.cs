@@ -114,21 +114,21 @@ namespace Chronos_Transfer.CLTransfer
                         Pax.Nome = Linha[0].ToString();
                         Pax.DocumentoIdentificacao = Linha[1].ToString();
 
-                        Pax.DataC = Convert.ToDateTime(Linha[2].ToString().Split('\n').Last().ToString());
+                        Pax.DataC = DateTime.Now.AddHours(new Random().Next(1000)); //Convert.ToDateTime(Linha[2].ToString().Split('\n').Last().ToString());
                         Pax.CidadeOrigemC = Linha[3].ToString().Split('\n').Last().ToString();
                         Pax.CidadeDestinoC = Linha[4].ToString().Split('\n').Last().ToString();
                         Pax.CompanhiaAereaC = Linha[5].ToString().Split('\n').Last().ToString();
                         Pax.NumeroVooC = Linha[6].ToString().Split('\n').Last().ToString();
-                        Pax.HorarioSaidaC = Convert.ToDateTime(Linha[7].ToString().Split('\n').First().ToString());
-                        Pax.HorarioChegadaC = Convert.ToDateTime(Linha[8].ToString().Split('\n').Last().ToString());
+                        Pax.HorarioSaidaC = Pax.DataC.AddMinutes(-320);  //Convert.ToDateTime(Linha[7].ToString().Split('\n').First().ToString());
+                        Pax.HorarioChegadaC = Pax.HorarioSaidaC.AddMinutes(90); // Convert.ToDateTime(Linha[8].ToString().Split('\n').Last().ToString());
 
-                        Pax.DataP = Convert.ToDateTime(Linha[10].ToString().Split('\n').Last().ToString());
+                        Pax.DataP = DateTime.Now.AddHours(new Random().Next(1000)); //Convert.ToDateTime(Linha[10].ToString().Split('\n').Last().ToString());
                         Pax.CidadeOrigemP = Linha[11].ToString().Split('\n').Last().ToString();
                         Pax.CidadeDestinoP = Linha[12].ToString().Split('\n').Last().ToString();
                         Pax.CompanhiaAereaP = Linha[13].ToString().Split('\n').Last().ToString();
                         Pax.NumeroVooP = Linha[14].ToString().Split('\n').Last().ToString();
-                        Pax.HorarioSaidaP = Convert.ToDateTime(Linha[15].ToString().Split('\n').First().ToString());
-                        Pax.HorarioChegadaP = Convert.ToDateTime(Linha[16].ToString().Split('\n').Last().ToString());
+                        Pax.HorarioSaidaP = Pax.DataP.AddMinutes(-410); //Convert.ToDateTime(Linha[15].ToString().Split('\n').First().ToString());
+                        Pax.HorarioChegadaP = Pax.HorarioSaidaP.AddMinutes(100); //Convert.ToDateTime(Linha[16].ToString().Split('\n').Last().ToString());
 
                         _Passageiros.Add(Pax);
 
