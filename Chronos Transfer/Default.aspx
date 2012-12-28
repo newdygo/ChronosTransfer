@@ -4,36 +4,35 @@
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h1><%: Title %>.</h1>
-                <h2>Modify this template to jump-start your ASP.NET application.</h2>
-            </hgroup>
-            <p>
-                To learn more about ASP.NET, visit <a href="http://asp.net" title="ASP.NET Website">http://asp.net</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET.
-                If you have any questions about ASP.NET visit
-                <a href="http://forums.asp.net/18.aspx" title="ASP.NET Forum 2">our forums</a>.
-            </p>
+                <h1>Chronos Transfer</h1>
+            </hgroup>            
         </div>
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3>We suggest the following:</h3>
+    <h3>Transfer</h3>
     <ol class="round">
         <li class="one">
-            <h5>Getting Started</h5>
-            ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245146">Learn more…</a>
-        </li>
-        <li class="two">
-            <h5>Add NuGet packages and jump-start your coding</h5>
-            NuGet makes it easy to install and update free libraries and tools.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245147">Learn more…</a>
-        </li>
-        <li class="three">
-            <h5>Find Web Hosting</h5>
-            You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245143">Learn more…</a>
+            <h5>Cálculo do Transfer:</h5>
+            
+            <asp:RegularExpressionValidator ID="rexp" runat="server" ControlToValidate="FileTransfer" ErrorMessage="Somente .xls" ValidationExpression="(.*\.([Xx][Ll][Ss])$)"></asp:RegularExpressionValidator>
+            <asp:FileUpload ID="FileTransfer" Width ="600" runat="server" /> <br />
+
+            <asp:Button ID="btnProcessar" runat="server" Text="Processar" OnClick="btnProcessar_Click" /> <br />
+
+            <asp:Label ID="lblStatusUpload" runat="server" Text=""></asp:Label> <br />
+
+            <asp:GridView Width ="900px" ID="gridPassageiros" runat="server" AutoGenerateColumns="False">
+                <Columns>
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="NumeroVoo" HeaderText="Número Vôo" />
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="HorarioSaida" HeaderText="Horário Saída" />
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="HorarioChegada" HeaderText="Horário Chegada" />
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="Quantidade" HeaderText="Quantidade" />
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="TipoVeiculo" HeaderText="Veículo" />
+                </Columns>
+                
+            </asp:GridView>
+
         </li>
     </ol>
 </asp:Content>
