@@ -22,15 +22,15 @@ namespace Chronos_Transfer
             {
                 try
                 {
-                    String _FileName = Path.GetFileName(FileTransfer.FileName);
-                    
-                    FileTransfer.SaveAs(Server.MapPath("~/") + _FileName);
+                    String _FileName = Path.GetTempPath() + FileTransfer.FileName;
+
+                    FileTransfer.SaveAs(_FileName);
 
                     lblStatusUpload.Text = "Upload status: File uploaded!";
 
                     Passageiro _Passageiro = new Passageiro();
 
-                    _Passageiro.AbrirArquivo(Server.MapPath("~/") + _FileName, gridPassageiros);
+                    _Passageiro.AbrirArquivo(_FileName, gridPassageiros);
                 }
                 catch (Exception ex)
                 {
