@@ -72,7 +72,7 @@ namespace Chronos_Transfer.CLTransfer
 
         #endregion
 
-        public void AbrirArquivo(String _DataSource, GridView _GridView, ref Passageiro _Pass)
+        public void AbrirArquivo(String _DataSource, GridView _GridView, GridView _GridTeste, ref Passageiro _Pass)
         {
             List<Passageiro> _Passageiros = new List<Passageiro>();
             DataTable _Table = new DataTable();
@@ -85,7 +85,7 @@ namespace Chronos_Transfer.CLTransfer
                 {
                     // The insertSQL string contains a SQL statement that
                     // inserts a new row in the source table.
-                    OleDbCommand command = new OleDbCommand("select * from [Plan1$] where Nome <> ''");
+                    OleDbCommand command = new OleDbCommand("select * from [Plan1$]");
 
                     command.Connection = connection;
 
@@ -94,6 +94,10 @@ namespace Chronos_Transfer.CLTransfer
                         connection.Open();                       
 
                         _Table.Load(command.ExecuteReader());
+
+                        _GridTeste.DataSource = _Table;
+
+                        _GridTeste.DataBind();
                     }
                     catch (Exception ex)
                     {

@@ -30,7 +30,7 @@ namespace Chronos_Transfer
 
                     lblStatusUpload.Text = "Upload status: File uploaded!";                    
 
-                    _Passageiro.AbrirArquivo(_FileName, gridPassageiros, ref _Passageiro);
+                    _Passageiro.AbrirArquivo(_FileName, gridPassageiros, gridTeste, ref _Passageiro);
                 }
                 catch (Exception ex)
                 {
