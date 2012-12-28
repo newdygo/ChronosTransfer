@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Chronos_Transfer
 {
@@ -23,30 +22,15 @@ namespace Chronos_Transfer
             {
                 try
                 {
-                    FileTransfer.SaveAs(Server.MapPath("~/") + FileTransfer.FileName);
-
-                    Excel.Application excel = new Excel.Application();
-                    Excel.Workbook wb = excel.Workbooks.Open(Server.MapPath("~/") + FileTransfer.FileName);
-
-                    foreach (Excel.Worksheet sh in wb.Worksheets)
-                    {
-                        lblStatusUpload.Text = sh.Cells[1, "A"].Value2;
-                        break;
-                    }
-
-                    wb.Close();
-                    excel.Quit();
-                     
-
-                    //String _FileName = Path.GetFileName(FileTransfer.FileName);
-
-                    //String jjj = Path.GetFullPath(FileTransfer.FileName);
+                    String _FileName = Path.GetFileName(FileTransfer.FileName);
                     
-                    //lblStatusUpload.Text = "Upload status: File uploaded!";
+                    FileTransfer.SaveAs(Server.MapPath("~/") + _FileName);
 
-                    //Passageiro _Passageiro = new Passageiro();
+                    lblStatusUpload.Text = "Upload status: File uploaded!";
 
-                    //_Passageiro.AbrirArquivo(jjj, gridPassageiros);
+                    Passageiro _Passageiro = new Passageiro();
+
+                    _Passageiro.AbrirArquivo(Server.MapPath("~/") + _FileName, gridPassageiros);
                 }
                 catch (Exception ex)
                 {
