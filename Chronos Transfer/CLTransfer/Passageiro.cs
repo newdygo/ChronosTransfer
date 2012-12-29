@@ -151,6 +151,7 @@ namespace Chronos_Transfer.CLTransfer
                         TransporteVooChegada _voo = new TransporteVooChegada();
 
                         _voo.NumeroVoo = passa.NumeroVooC;
+                        _voo.Data = passa.DataC;
                         _voo.HorarioSaida = passa.HorarioSaidaC;
                         _voo.HorarioChegada = passa.HorarioChegadaC;
                         _voo.Quantidade += 1;
@@ -170,6 +171,7 @@ namespace Chronos_Transfer.CLTransfer
                             TransporteVooChegada _voo = new TransporteVooChegada();
 
                             _voo.NumeroVoo = passa.NumeroVooC;
+                            _voo.Data = passa.DataC;
                             _voo.HorarioSaida = passa.HorarioSaidaC;
                             _voo.HorarioChegada = passa.HorarioChegadaC;
                             _voo.Quantidade += 1;

@@ -10,10 +10,10 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3>Transfer</h3>
+    <h3>&nbsp;</h3>
     <ol class="round">
         <li class="one">
-            <h5>Cálculo do Transfer:</h5>
+            <h5>Importar Planilha:</h5>
             
             <asp:RegularExpressionValidator ID="rexp" runat="server" ControlToValidate="FileTransfer" ErrorMessage="Somente .xls" ValidationExpression="(.*\.([Xx][Ll][Ss])$)"></asp:RegularExpressionValidator>
             <asp:FileUpload ID="FileTransfer" Width ="600" runat="server" /> <br />
@@ -23,14 +23,18 @@
             <asp:Label ID="lblStatusUpload" runat="server" Text=""></asp:Label> <br />
 
             <asp:GridView Width ="1145px" ID="gridPassageiros" runat="server" AutoGenerateColumns="False">
+
                 <Columns>
-                    <asp:BoundField HeaderStyle-Width ="150" DataField="NumeroVoo" HeaderText="Número Vôo" />
-                    <asp:BoundField HeaderStyle-Width ="150" DataField="HorarioSaida" HeaderText="Horário Saída" />
-                    <asp:BoundField HeaderStyle-Width ="150" DataField="HorarioChegada" HeaderText="Horário Chegada" />
-                    <asp:BoundField HeaderStyle-Width ="150" DataField="Quantidade" HeaderText="Quantidade" />
-                    <asp:BoundField HeaderStyle-Width ="150" DataField="TipoVeiculo" HeaderText="Veículo" />
-                </Columns>
-                
+
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="NumeroVoo" HeaderText="Número Vôo" ><HeaderStyle Width="150px"></HeaderStyle></asp:BoundField>
+                    <asp:BoundField DataField="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Data" ><HeaderStyle Width="150px"></HeaderStyle></asp:BoundField>
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="HorarioSaida" HeaderText="Horário Saída" DataFormatString="{0:HH:mm:ss} "><HeaderStyle Width="150px"></HeaderStyle></asp:BoundField>
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="HorarioChegada" HeaderText="Horário Chegada" DataFormatString="{0:HH:mm:ss} "><HeaderStyle Width="150px"></HeaderStyle></asp:BoundField>
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="Quantidade" HeaderText="Quantidade" ><HeaderStyle Width="150px"></HeaderStyle></asp:BoundField>
+                    <asp:BoundField HeaderStyle-Width ="150" DataField="TipoVeiculo" HeaderText="Veículo" ><HeaderStyle Width="150px"></HeaderStyle></asp:BoundField>
+
+                </Columns>  
+                              
             </asp:GridView>
 
         </li>
