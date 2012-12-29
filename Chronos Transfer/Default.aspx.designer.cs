@@ -13,15 +13,6 @@ namespace Chronos_Transfer {
     public partial class _Default {
         
         /// <summary>
-        /// rexp control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rexp;
-        
-        /// <summary>
         /// FileTransfer control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace Chronos_Transfer {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FileTransfer;
+        
+        /// <summary>
+        /// rexp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rexp;
         
         /// <summary>
         /// btnProcessar control.

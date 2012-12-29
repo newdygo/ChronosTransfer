@@ -4,7 +4,7 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %>- Chronos Transfer Application</title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -31,14 +31,16 @@
             <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
             <asp:ScriptReference Name="WebFormsBundle" />
             <%--Site Scripts--%>
-
         </Scripts>
     </asp:ScriptManager>
-    <header>
+    <header style="height: 130px">
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a runat="server" href="~/">Chronos</a>
+
+                    <asp:Image ID="imgLogo" runat="server" Height="100px" ImageAlign="AbsMiddle" ImageUrl="~/Images/Chronos_100x274.png" Width="274px" /><br />
+                    
+                    <!--<a runat="server" href="~/">Chronos</a>-->
                 </p>
             </div>
             <!--<div class="float-right">
@@ -66,19 +68,20 @@
                         <li><a runat="server" href="~/Contact.aspx">Contact</a></li>
                     </ul>
                 </nav>
-            </div>-->
+            </div>-->      
         </div>
     </header>
-    <div id="body">
+    <div id="body" >
         <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
-        <section class="content-wrapper main-content clear-fix">
+        <%--Framework Scripts--%>
+        <section>
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />
         </section>
     </div>
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%--Site Scripts--%>- Chronos Transfer Application</p>
             </div>
         </div>
     </footer>

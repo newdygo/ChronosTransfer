@@ -84,8 +84,6 @@ namespace Chronos_Transfer.CLTransfer
 
                 using (OleDbConnection connection = new OleDbConnection(Cone))
                 {
-                    // The insertSQL string contains a SQL statement that
-                    // inserts a new row in the source table.
                     OleDbCommand command = new OleDbCommand("select * from [Plan1$]");
 
                     command.Connection = connection;
@@ -215,19 +213,9 @@ namespace Chronos_Transfer.CLTransfer
                     _Tra3.Add(ppp);
                 }
                 
-                //BindingSource _BBB = new BindingSource();
-
                 _GridView.DataSource = _Tra2;
 
                 _GridView.DataBind();
-
-                //_1.DataSource = _BBB;
-
-                //BindingSource _BBB2 = new BindingSource();
-
-                //_BBB2.DataSource = _Tra3;
-
-                //_2.DataSource = _BBB2;
        
             }
             catch (Exception ex)
