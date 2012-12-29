@@ -112,7 +112,7 @@ namespace Chronos_Transfer.CLTransfer
 
                         Random ppp = new Random();
 
-                        Pax.DataC = DateTime.Now.AddHours(ppp.Next(1000)); //Convert.ToDateTime(Linha[2].ToString().Split('\n').Last().ToString());
+                        Pax.DataC = Convert.ToDateTime(Linha[2].ToString().Split('\n').Last().ToString());
                         Pax.CidadeOrigemC = Linha[3].ToString().Split('\n').Last().ToString();
                         Pax.CidadeDestinoC = Linha[4].ToString().Split('\n').Last().ToString();
                         Pax.CompanhiaAereaC = Linha[5].ToString().Split('\n').Last().ToString();
