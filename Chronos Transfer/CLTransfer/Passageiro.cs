@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -112,7 +113,9 @@ namespace Chronos_Transfer.CLTransfer
 
                         Random ppp = new Random();
 
-                        Pax.DataC = Convert.ToDateTime("12/27");
+                        IFormatProvider culture = new System.Globalization.CultureInfo("pt-BR", true);
+
+                        Pax.DataC = DateTime.Parse(Linha[2].ToString().Split('\n').Last().ToString(), culture, DateTimeStyles.None);  //     Convert.ToDateTime(Linha[2].ToString().Split('\n').Last().ToString());
                         Pax.CidadeOrigemC = Linha[3].ToString().Split('\n').Last().ToString();
                         Pax.CidadeDestinoC = Linha[4].ToString().Split('\n').Last().ToString();
                         Pax.CompanhiaAereaC = Linha[5].ToString().Split('\n').Last().ToString();
