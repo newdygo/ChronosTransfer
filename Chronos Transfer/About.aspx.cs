@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Chronos_Transfer
+namespace ChronosTransfer
 {
     public partial class About : Page
     {

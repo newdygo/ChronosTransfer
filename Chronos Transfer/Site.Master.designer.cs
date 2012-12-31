@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chronos_Transfer {
+namespace ChronosTransfer {
     
     
     public partial class SiteMaster {

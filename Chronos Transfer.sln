@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronos Transfer", "Chronos Transfer\Chronos Transfer.csproj", "{0522C3BB-EB78-4893-B36B-465A0A2370BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronosTransfer", "Chronos Transfer\ChronosTransfer.csproj", "{0522C3BB-EB78-4893-B36B-465A0A2370BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

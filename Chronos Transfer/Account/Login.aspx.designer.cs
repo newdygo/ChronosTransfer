@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chronos_Transfer.Account
+namespace ChronosTransfer.Account
 {
 
 
@@ -30,6 +30,6 @@ namespace Chronos_Transfer.Account
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Chronos_Transfer.Account.OpenAuthProviders OpenAuthLogin;
+        protected global::ChronosTransfer.Account.OpenAuthProviders OpenAuthLogin;
     }
 }

@@ -7,10 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chronos_Transfer {
+namespace ChronosTransfer {
     
     
     public partial class _Default {
+        
+        /// <summary>
+        /// rexp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator rexp;
         
         /// <summary>
         /// FileTransfer control.
@@ -22,13 +31,13 @@ namespace Chronos_Transfer {
         protected global::System.Web.UI.WebControls.FileUpload FileTransfer;
         
         /// <summary>
-        /// rexp control.
+        /// btnUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator rexp;
+        protected global::System.Web.UI.WebControls.Button btnUpload;
         
         /// <summary>
         /// btnProcessar control.
@@ -47,6 +56,15 @@ namespace Chronos_Transfer {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStatusUpload;
+        
+        /// <summary>
+        /// gridSheets control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridSheets;
         
         /// <summary>
         /// gridPassageiros control.

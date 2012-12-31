@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Chronos_Transfer.Account
+namespace ChronosTransfer.Account
 {
     public partial class Login : Page
     {

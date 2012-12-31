@@ -11,7 +11,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chronos_Transfer</RootNamespace>
+    <RootNamespace>ChronosTransfer</RootNamespace>
     <AssemblyName>Chronos Transfer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
@@ -281,7 +281,11 @@
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CLTransfer\Chronos.cs" />
+    <Compile Include="CLTransfer\Conexao.cs" />
+    <Compile Include="CLTransfer\LogErro.cs" />
     <Compile Include="CLTransfer\Passageiro.cs" />
+    <Compile Include="CLTransfer\Sheet.cs" />
     <Compile Include="CLTransfer\TransporteVooChegada.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
-using Chronos_Transfer;
+using ChronosTransfer;
 
-namespace Chronos_Transfer
+namespace ChronosTransfer
 {
     public class Global : HttpApplication
     {

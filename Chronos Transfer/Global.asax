@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Chronos_Transfer.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="ChronosTransfer.Global" Language="C#" %>

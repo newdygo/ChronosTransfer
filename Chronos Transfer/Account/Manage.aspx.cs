@@ -4,7 +4,7 @@ using System.Linq;
 
 using Microsoft.AspNet.Membership.OpenAuth;
 
-namespace Chronos_Transfer.Account
+namespace ChronosTransfer.Account
 {
     public partial class Manage : System.Web.UI.Page
     {

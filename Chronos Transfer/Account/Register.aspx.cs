@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Membership.OpenAuth;
 
-namespace Chronos_Transfer.Account
+namespace ChronosTransfer.Account
 {
     public partial class Register : Page
     {

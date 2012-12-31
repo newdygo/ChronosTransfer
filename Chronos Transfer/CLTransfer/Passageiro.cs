@@ -1,54 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Web;
 using System.Data;
+using System.Linq;
 using System.Data.OleDb;
 using System.Globalization;
-using System.Linq;
-using System.Web;
 using System.Web.UI.WebControls;
+using System.Collections.Generic;
 
-namespace Chronos_Transfer.CLTransfer
+namespace ChronosTransfer.CLTransfer
 {
-    public class Passageiro
+    public class Passageiro : Chronos
     {
-         #region Variáveis
-
-        private String _Nome;
-        private String _DocumentoIdentificacao;
-
-        #region Chegada
-
-        private DateTime _DataC;
-        private String _CidadeOrigemC;
-        private String _CidadeDestinoC;
-        private String _CompanhiaAereaC;
-        private String _NumeroVooC;
-        private DateTime _HorarioSaidaC;
-        private DateTime _HorarioChegadaC;
-
-        #endregion
-
-        #region Partida
-
-        private DateTime _DataP;
-        private String _CidadeOrigemP;
-        private String _CidadeDestinoP;
-        private String _CompanhiaAereaP;
-        private String _NumeroVooP;
-        private DateTime _HorarioSaidaP;
-        private DateTime _HorarioChegadaP;
-
-        #endregion
-
-        #endregion
-
         #region Propriedades
+
+        #region Básico
 
         public String Nome { get; set; }
         public String DocumentoIdentificacao { get; set; }
 
+        #endregion
+
         #region Chegada
-                
+
         public DateTime DataC { get; set; }
         public String CidadeOrigemC { get; set; }
         public String CidadeDestinoC { get; set; }
@@ -73,155 +46,162 @@ namespace Chronos_Transfer.CLTransfer
 
         #endregion
 
-        public void AbrirArquivo(String _DataSource, GridView _GridView, ref Passageiro _Pass)
+        #region Propriedades Privadas
+
+        DataTable _Table;
+        Passageiro _Passageiro;
+        List<Passageiro> _Passageiros;
+        List<Passageiro> _PassageirosOrdenadorNumeroVoo;
+        List<TransporteVooChegada> _TransporteVooChegada;
+
+        Char[] _Char = Environment.NewLine.ToCharArray();
+
+        #endregion
+
+        public List<TransporteVooChegada> ProcessarArquivo(String _DataSource, String _Sheet)
         {
-            List<Passageiro> _Passageiros = new List<Passageiro>();
-            DataTable _Table = new DataTable();
+            _Passageiros = new List<Passageiro>();
 
-            try
+            _Table = RetornarTudoSheet(_Sheet);
+
+            foreach (DataRow _Row in _Table.Rows)
             {
-                String Cone = String.Format("Provider=Microsoft.Jet.OleDb.4.0; data source= {0}; Extended Properties=\"Excel 8.0; HDR=Yes\";", _DataSource);
-
-                using (OleDbConnection connection = new OleDbConnection(Cone))
+                try
                 {
-                    OleDbCommand command = new OleDbCommand("select * from [Plan1$]");
+                    _Passageiro = new Passageiro();
 
-                    command.Connection = connection;
+                    IFormatProvider _Culture = new System.Globalization.CultureInfo("pt-BR", true);
 
-                    try
-                    {
-                        connection.Open();                       
+                    _Passageiro.Nome = _Row[0].ToString();
+                    _Passageiro.DocumentoIdentificacao = _Row[1].ToString();
 
-                        _Table.Load(command.ExecuteReader());
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    _Passageiro.DataC = DateTime.Parse(_Row[2].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+                    _Passageiro.CidadeOrigemC = _Row[3].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.CidadeDestinoC = _Row[4].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.CompanhiaAereaC = _Row[5].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.NumeroVooC = _Row[6].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.HorarioSaidaC = DateTime.Parse(_Row[7].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+                    _Passageiro.HorarioChegadaC = DateTime.Parse(_Row[8].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+
+                    _Passageiro.DataP = DateTime.Parse(_Row[10].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+                    _Passageiro.CidadeOrigemP = _Row[11].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.CidadeDestinoP = _Row[12].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.CompanhiaAereaP = _Row[13].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.NumeroVooP = _Row[14].ToString().Split(_Char).Last().ToString();
+                    _Passageiro.HorarioSaidaP = DateTime.Parse(_Row[15].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+                    _Passageiro.HorarioChegadaP = DateTime.Parse(_Row[16].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+
+                    _Passageiros.Add(_Passageiro);
                 }
-
-                Passageiro Pax = new Passageiro();
-
-                foreach (DataRow Linha in _Table.Rows)
+                catch
                 {
-                    try
-                    {
-                        Pax.Nome = Linha[0].ToString();
-                        Pax.DocumentoIdentificacao = Linha[1].ToString();
-                        
-                        IFormatProvider _Culture = new System.Globalization.CultureInfo("pt-BR", true);
-
-                        Pax.DataC = DateTime.Parse(Linha[2].ToString().Split('\n').Last().ToString(), _Culture, DateTimeStyles.None); 
-                        Pax.CidadeOrigemC = Linha[3].ToString().Split('\n').Last().ToString();
-                        Pax.CidadeDestinoC = Linha[4].ToString().Split('\n').Last().ToString();
-                        Pax.CompanhiaAereaC = Linha[5].ToString().Split('\n').Last().ToString();
-                        Pax.NumeroVooC = Linha[6].ToString().Split('\n').Last().ToString();
-                        Pax.HorarioSaidaC = DateTime.Parse(Linha[7].ToString().Split('\n').Last().ToString(), _Culture, DateTimeStyles.None); 
-                        Pax.HorarioChegadaC = DateTime.Parse(Linha[8].ToString().Split('\n').Last().ToString(), _Culture, DateTimeStyles.None);
-
-                        Pax.DataP = DateTime.Parse(Linha[10].ToString().Split('\n').Last().ToString(), _Culture, DateTimeStyles.None);
-                        Pax.CidadeOrigemP = Linha[11].ToString().Split('\n').Last().ToString();
-                        Pax.CidadeDestinoP = Linha[12].ToString().Split('\n').Last().ToString();
-                        Pax.CompanhiaAereaP = Linha[13].ToString().Split('\n').Last().ToString();
-                        Pax.NumeroVooP = Linha[14].ToString().Split('\n').Last().ToString();
-                        Pax.HorarioSaidaP = DateTime.Parse(Linha[15].ToString().Split('\n').Last().ToString(), _Culture, DateTimeStyles.None);
-                        Pax.HorarioChegadaP = DateTime.Parse(Linha[16].ToString().Split('\n').Last().ToString(), _Culture, DateTimeStyles.None);
-
-                        _Passageiros.Add(Pax);
-
-                        Pax = new Passageiro();
-                    }
-                    catch (Exception ex)
-                    {
-                        _Pass = Pax;
-                        throw ex;
-                    }                    
+                    continue;
                 }
+            }
 
-                List<Passageiro> _Pasa = _Passageiros.OrderBy(x => x.NumeroVooC).ToList();
-                List<TransporteVooChegada> _Tra = new List<TransporteVooChegada>();
-                List<TransporteVooChegada> _Tra3 = new List<TransporteVooChegada>();
+            _PassageirosOrdenadorNumeroVoo = _Passageiros.OrderBy(x => x.NumeroVooC).ToList();
 
-                foreach (Passageiro passa in _Pasa)
+            _TransporteVooChegada = new List<TransporteVooChegada>();
+
+            foreach (Passageiro _Passageiro in _PassageirosOrdenadorNumeroVoo)
+            {
+                if (_TransporteVooChegada.Count == 0)
                 {
-                    if (_Tra.Count == 0)
+                    TransporteVooChegada _voo = new TransporteVooChegada();
+
+                    _voo.NumeroVoo = _Passageiro.NumeroVooC;
+                    _voo.Data = _Passageiro.DataC;
+                    _voo.HorarioSaida = _Passageiro.HorarioSaidaC;
+                    _voo.HorarioChegada = _Passageiro.HorarioChegadaC;
+                    _voo.Quantidade += 1;
+                    _voo.TipoVeiculo = RetornaCarro(_voo.Quantidade);
+
+                    _TransporteVooChegada.Add(_voo);
+                }
+                else
+                {
+                    if (_TransporteVooChegada.Last().NumeroVoo == _Passageiro.NumeroVooC)
                     {
-                        TransporteVooChegada _voo = new TransporteVooChegada();
-
-                        _voo.NumeroVoo = passa.NumeroVooC;
-                        _voo.Data = passa.DataC;
-                        _voo.HorarioSaida = passa.HorarioSaidaC;
-                        _voo.HorarioChegada = passa.HorarioChegadaC;
-                        _voo.Quantidade += 1;
-                        _voo.TipoVeiculo = RetornaCarro(_voo.Quantidade);
-
-                        _Tra.Add(_voo);
+                        _TransporteVooChegada.Last().Quantidade += 1;
+                        _TransporteVooChegada.Last().TipoVeiculo = RetornaCarro(_TransporteVooChegada.Last().Quantidade);
                     }
                     else
                     {
-                        if (_Tra.Last().NumeroVoo == passa.NumeroVooC)
-                        {
-                            _Tra.Last().Quantidade += 1;
-                            _Tra.Last().TipoVeiculo = RetornaCarro(_Tra.Last().Quantidade);
-                        }
-                        else
-                        {
-                            TransporteVooChegada _voo = new TransporteVooChegada();
+                        TransporteVooChegada _voo = new TransporteVooChegada();
 
-                            _voo.NumeroVoo = passa.NumeroVooC;
-                            _voo.Data = passa.DataC;
-                            _voo.HorarioSaida = passa.HorarioSaidaC;
-                            _voo.HorarioChegada = passa.HorarioChegadaC;
-                            _voo.Quantidade += 1;
-                            _voo.TipoVeiculo = RetornaCarro(_voo.Quantidade);
+                        _voo.NumeroVoo = _Passageiro.NumeroVooC;
+                        _voo.Data = _Passageiro.DataC;
+                        _voo.HorarioSaida = _Passageiro.HorarioSaidaC;
+                        _voo.HorarioChegada = _Passageiro.HorarioChegadaC;
+                        _voo.Quantidade += 1;
+                        _voo.TipoVeiculo = RetornaCarro(_voo.Quantidade);
 
-                            _Tra.Add(_voo);
-                        }
+                        _TransporteVooChegada.Add(_voo);
                     }
                 }
-
-                List<TransporteVooChegada> _Tra2 = _Tra.OrderBy(x => x.HorarioChegada).ToList();
-
-                foreach (TransporteVooChegada passa in _Tra2)
-                {
-                    List<TransporteVooChegada> _ooo = new List<TransporteVooChegada>();
-
-                    _ooo = _Tra2.Where(x => x.HorarioChegada <= passa.HorarioChegada.AddMinutes(90) && x.HorarioChegada > passa.HorarioChegada.AddMinutes(-90)).ToList();
-
-                    TransporteVooChegada ppp = new TransporteVooChegada();
-                    foreach (var ooo in _ooo)
-                    {
-                        if (ppp.NumeroVoo == String.Empty)
-                        {
-                            ppp.NumeroVoo = String.Format("Voo: {0}", ooo.NumeroVoo);
-                        }
-                        else
-                        {
-                            ppp.NumeroVoo = String.Format("{0} - Voo: {1}", ppp.NumeroVoo, ooo.NumeroVoo);
-                        }
-
-                        if (ppp.HorarioChegada < ooo.HorarioChegada)
-                            ppp.HorarioChegada = ooo.HorarioChegada;
-
-                        if (ppp.HorarioSaida < ooo.HorarioSaida)
-                            ppp.HorarioSaida = ooo.HorarioSaida;
-
-                        ppp.Quantidade += ooo.Quantidade;
-                        ppp.TipoVeiculo = RetornaCarro(ppp.Quantidade);
-                    }
-
-                    _Tra3.Add(ppp);
-                }
-                
-                _GridView.DataSource = _Tra2;
-
-                _GridView.DataBind();
-       
             }
-            catch (Exception ex)
-            {                
-                throw ex;
-            }
+
+            return _TransporteVooChegada;
+
+            //DataTable _Table2 = new DataTable();
+
+            //try
+            //{
+
+            //    Passageiro Pax = new Passageiro();
+
+
+
+
+            //    List<TransporteVooChegada> _Tra = new List<TransporteVooChegada>();
+            //    List<TransporteVooChegada> _Tra3 = new List<TransporteVooChegada>();
+
+
+
+            //    List<TransporteVooChegada> _Tra2 = _Tra.OrderBy(x => x.HorarioChegada).ToList();
+
+            //    foreach (TransporteVooChegada passa in _Tra2)
+            //    {
+            //        List<TransporteVooChegada> _ooo = new List<TransporteVooChegada>();
+
+            //        _ooo = _Tra2.Where(x => x.HorarioChegada <= passa.HorarioChegada.AddMinutes(90) && x.HorarioChegada > passa.HorarioChegada.AddMinutes(-90)).ToList();
+
+            //        TransporteVooChegada ppp = new TransporteVooChegada();
+            //        foreach (var ooo in _ooo)
+            //        {
+            //            if (ppp.NumeroVoo == String.Empty)
+            //            {
+            //                ppp.NumeroVoo = String.Format("Voo: {0}", ooo.NumeroVoo);
+            //            }
+            //            else
+            //            {
+            //                ppp.NumeroVoo = String.Format("{0} - Voo: {1}", ppp.NumeroVoo, ooo.NumeroVoo);
+            //            }
+
+            //            if (ppp.HorarioChegada < ooo.HorarioChegada)
+            //                ppp.HorarioChegada = ooo.HorarioChegada;
+
+            //            if (ppp.HorarioSaida < ooo.HorarioSaida)
+            //                ppp.HorarioSaida = ooo.HorarioSaida;
+
+            //            ppp.Quantidade += ooo.Quantidade;
+            //            ppp.TipoVeiculo = RetornaCarro(ppp.Quantidade);
+            //        }
+
+            //        _Tra3.Add(ppp);
+            //    }
+
+            //    _GridView.DataSource = _Tra2;
+
+            //    _GridView.DataBind();
+
+            //}
+            //catch (Exception ex)
+            //{                
+            //    throw ex;
+            //}
+
+            return null;
         }
 
         public String RetornaCarro(int Quantidade)
@@ -249,6 +229,30 @@ namespace Chronos_Transfer.CLTransfer
             else
             {
                 return "Ônibus";
+            }
+        }
+
+        /// <summary>
+        /// Rotina utilizada para retornar todos os dados de uma sheet
+        /// </summary>
+        /// <param name="_Sheet">Sheet da planilha Excel.</param>
+        /// <returns>Retorna dados de uma sheet Excel.</returns>
+        public DataTable RetornarTudoSheet(String _Sheet)
+        {
+            using (Conectar())
+            {
+                //No momento da abertura do arquivo identificar quais planilhas existem dentro da pasta e exibir ao usuário em formato de combobox o nome das planilhas
+                //e pedir que identifique qual planilha contem os dados para processamento.
+
+                using (OleDbCommand command = new OleDbCommand() { CommandText = String.Format("Select * From [{0}]", _Sheet), CommandType = CommandType.Text, Connection = ConexaoOL })
+                {
+                    using (DataTable _Table = new DataTable())
+                    {
+                        _Table.Load(command.ExecuteReader());
+
+                        return _Table;
+                    }
+                }
             }
         }
     }

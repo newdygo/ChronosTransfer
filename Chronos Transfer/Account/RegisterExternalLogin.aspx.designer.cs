@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chronos_Transfer.Account
+namespace ChronosTransfer.Account
 {
 
 

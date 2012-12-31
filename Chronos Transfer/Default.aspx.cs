@@ -1,35 +1,74 @@
-﻿using Chronos_Transfer.CLTransfer;
+﻿using ChronosTransfer.CLTransfer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Chronos_Transfer
+namespace ChronosTransfer
 {
     public partial class _Default : Page
     {
-        protected void btnProcessar_Click(object sender, EventArgs e)
+        public static String FileName { get; set; }
+
+        protected void btnUpload_Click(object sender, EventArgs e)
         {
             if (FileTransfer.HasFile)
             {
-                Passageiro _Passageiro = new Passageiro();
+                FileName = Path.GetTempPath() + FileTransfer.FileName;
 
-                try
+                FileTransfer.SaveAs(FileName);
+
+                Passageiro _Passageiro = new Passageiro() { DataSource = FileName };
+
+                gridSheets.DataSource = _Passageiro.RetornarSchemaExcel();
+                gridSheets.DataBind();
+
+                lblStatusUpload.Text = "Arquivo carregado com sucesso!";
+
+                btnProcessar.Enabled = true;
+                btnUpload.Enabled = false;                
+            }
+        }
+
+        protected void btnProcessar_Click(object sender, EventArgs e)
+        {
+            gridSheets.Visible = false;
+            lblStatusUpload.Visible = false;
+
+            foreach (GridViewRow _Row in gridSheets.Rows)
+            {
+                CheckBox _CheckBox = (CheckBox)_Row.FindControl("chqBody");
+
+                if (_CheckBox.Checked)
                 {
-                    String _FileName = Path.GetTempPath() + FileTransfer.FileName;
+                    Passageiro _Passageiro = new Passageiro() { DataSource = FileName };
 
-                    FileTransfer.SaveAs(_FileName);
+                    gridPassageiros.DataSource = _Passageiro.ProcessarArquivo(FileName, _Row.Cells[1].Text);
+                    gridPassageiros.DataBind();
 
-                    lblStatusUpload.Text = "Upload status: File uploaded!";                    
+                    lblStatusUpload.Text = "Transfer gerado com sucesso.";
 
-                    _Passageiro.AbrirArquivo(_FileName, gridPassageiros, ref _Passageiro);
+                    btnProcessar.Enabled = false;
+                    btnUpload.Enabled = true; 
+
+                    break;
                 }
-                catch (Exception ex)
+            }
+        }
+
+        protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow _Row in gridSheets.Rows)
+            {
+                CheckBox _CheckBox = (CheckBox)_Row.FindControl("chqBody");
+
+                if (_CheckBox != null)
                 {
-                    lblStatusUpload.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message + " " + _Passageiro.Nome;
+                    _CheckBox.Checked = (sender as CheckBox).Checked;
                 }
             }
         }

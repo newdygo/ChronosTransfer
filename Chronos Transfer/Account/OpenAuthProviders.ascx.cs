@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using Microsoft.AspNet.Membership.OpenAuth;
 
-namespace Chronos_Transfer.Account
+namespace ChronosTransfer.Account
 {
     public partial class OpenAuthProviders : System.Web.UI.UserControl
     {
