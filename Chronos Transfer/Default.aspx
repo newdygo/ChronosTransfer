@@ -48,16 +48,18 @@
                 </Columns>
             </asp:GridView>
 
-            <asp:GridView Width="900px" ID="gridPassageiros" runat="server" AutoGenerateColumns="False">
+            <asp:GridView Width="900px" ID="gridVooChegada" runat="server" AutoGenerateColumns="False">
                 <Columns>
                     <asp:BoundField HeaderStyle-Width="150" DataField="NumeroVoo" HeaderText="Número Vôo"></asp:BoundField>
                     <asp:BoundField HeaderStyle-Width="150" DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}"></asp:BoundField>
                     <asp:BoundField HeaderStyle-Width="150" DataField="HorarioSaida" HeaderText="Horário Saída" DataFormatString="{0:HH:mm:ss} "></asp:BoundField>
                     <asp:BoundField HeaderStyle-Width="150" DataField="HorarioChegada" HeaderText="Horário Chegada" DataFormatString="{0:HH:mm:ss} "></asp:BoundField>
-                    <asp:BoundField HeaderStyle-Width="150" DataField="Quantidade" HeaderText="Quantidade"></asp:BoundField>
+                    <asp:BoundField HeaderStyle-Width="200" DataField="QuantidadePassageiro" HeaderText="Quantidade Passageiro"></asp:BoundField>
                     <asp:BoundField HeaderStyle-Width="150" DataField="TipoVeiculo" HeaderText="Veículo"></asp:BoundField>
                 </Columns>
             </asp:GridView>
+
+            <div id="LinkToDownload" runat="server"></div>
 
         </li>
     </ol>

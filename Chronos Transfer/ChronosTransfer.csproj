@@ -283,6 +283,7 @@
     </Compile>
     <Compile Include="CLTransfer\Chronos.cs" />
     <Compile Include="CLTransfer\Conexao.cs" />
+    <Compile Include="CLTransfer\Excel.cs" />
     <Compile Include="CLTransfer\LogErro.cs" />
     <Compile Include="CLTransfer\Passageiro.cs" />
     <Compile Include="CLTransfer\Sheet.cs" />

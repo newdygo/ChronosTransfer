@@ -57,13 +57,13 @@ namespace ChronosTransfer.CLTransfer
         /// </summary>
         /// <param name="_DataSource">Caminho do arquivo de conexão com o Excel.</param>
         /// <returns>Retorn um datatable com os nomes das sheets da planilha Excel.</returns>
-        public DataTable RetornarSchemaExcel()
+        public DataTable RetornarSchema(Guid _OleDbSchemaGuid)
         {
             using (Conectar())
             {
                 using (DataTable _Table = new DataTable())
                 {
-                    return ConexaoOL.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                    return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null);
                 }
             }
         }

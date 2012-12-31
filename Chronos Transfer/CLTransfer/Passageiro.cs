@@ -52,13 +52,13 @@ namespace ChronosTransfer.CLTransfer
         Passageiro _Passageiro;
         List<Passageiro> _Passageiros;
         List<Passageiro> _PassageirosOrdenadorNumeroVoo;
-        List<TransporteVooChegada> _TransporteVooChegada;
+        List<VooChegada> _TransporteVooChegada;
 
         Char[] _Char = Environment.NewLine.ToCharArray();
 
         #endregion
 
-        public List<TransporteVooChegada> ProcessarArquivo(String _DataSource, String _Sheet)
+        public List<VooChegada> ProcessarArquivo(String _DataSource, String _Sheet)
         {
             _Passageiros = new List<Passageiro>();
 
@@ -101,20 +101,20 @@ namespace ChronosTransfer.CLTransfer
 
             _PassageirosOrdenadorNumeroVoo = _Passageiros.OrderBy(x => x.NumeroVooC).ToList();
 
-            _TransporteVooChegada = new List<TransporteVooChegada>();
+            _TransporteVooChegada = new List<VooChegada>();
 
             foreach (Passageiro _Passageiro in _PassageirosOrdenadorNumeroVoo)
             {
                 if (_TransporteVooChegada.Count == 0)
                 {
-                    TransporteVooChegada _voo = new TransporteVooChegada();
+                    VooChegada _voo = new VooChegada();
 
                     _voo.NumeroVoo = _Passageiro.NumeroVooC;
                     _voo.Data = _Passageiro.DataC;
                     _voo.HorarioSaida = _Passageiro.HorarioSaidaC;
                     _voo.HorarioChegada = _Passageiro.HorarioChegadaC;
-                    _voo.Quantidade += 1;
-                    _voo.TipoVeiculo = RetornaCarro(_voo.Quantidade);
+                    _voo.QuantidadePassageiro += 1;
+                    _voo.TipoVeiculo = RetornaCarro(_voo.QuantidadePassageiro);
 
                     _TransporteVooChegada.Add(_voo);
                 }
@@ -122,19 +122,19 @@ namespace ChronosTransfer.CLTransfer
                 {
                     if (_TransporteVooChegada.Last().NumeroVoo == _Passageiro.NumeroVooC)
                     {
-                        _TransporteVooChegada.Last().Quantidade += 1;
-                        _TransporteVooChegada.Last().TipoVeiculo = RetornaCarro(_TransporteVooChegada.Last().Quantidade);
+                        _TransporteVooChegada.Last().QuantidadePassageiro += 1;
+                        _TransporteVooChegada.Last().TipoVeiculo = RetornaCarro(_TransporteVooChegada.Last().QuantidadePassageiro);
                     }
                     else
                     {
-                        TransporteVooChegada _voo = new TransporteVooChegada();
+                        VooChegada _voo = new VooChegada();
 
                         _voo.NumeroVoo = _Passageiro.NumeroVooC;
                         _voo.Data = _Passageiro.DataC;
                         _voo.HorarioSaida = _Passageiro.HorarioSaidaC;
                         _voo.HorarioChegada = _Passageiro.HorarioChegadaC;
-                        _voo.Quantidade += 1;
-                        _voo.TipoVeiculo = RetornaCarro(_voo.Quantidade);
+                        _voo.QuantidadePassageiro += 1;
+                        _voo.TipoVeiculo = RetornaCarro(_voo.QuantidadePassageiro);
 
                         _TransporteVooChegada.Add(_voo);
                     }
@@ -200,9 +200,9 @@ namespace ChronosTransfer.CLTransfer
             //{                
             //    throw ex;
             //}
-
-            return null;
         }
+
+        
 
         public String RetornaCarro(int Quantidade)
         {
@@ -255,5 +255,7 @@ namespace ChronosTransfer.CLTransfer
                 }
             }
         }
+
+        
     }
 }
