@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ChronosTransfer.CLTransfer
 {
@@ -15,8 +16,7 @@ namespace ChronosTransfer.CLTransfer
         #region Variáveis
 
         public OleDbConnection ConexaoOL = new OleDbConnection();
-        public String DataSource;
-
+        
         #endregion
 
         #region OleDbConnextion
@@ -33,7 +33,7 @@ namespace ChronosTransfer.CLTransfer
                     //Conexão OleDb para versões atuais do excel, não funciona na WEB (necessita descobrir o motivo)
                     //String _Conexao = String.Format("Provider=Microsoft.Ace.OleDb.12.0; Data Source= {0}; Extended Properties=\"Excel 12.0 Xml; HDR=Yes\";", _DataSource);
 
-                    String _Conexao = String.Format("Provider=Microsoft.Jet.OLEDB.4.0; Data Source= {0}; Extended Properties=\"Excel 8.0; HDR=Yes\";", DataSource);
+                    String _Conexao = String.Format("Provider=Microsoft.Jet.OLEDB.4.0; Data Source= {0}Transfer.xls; Extended Properties=\"Excel 8.0; HDR=Yes\";", Path.GetTempPath());
 
                     ConexaoOL = new OleDbConnection(_Conexao);
 

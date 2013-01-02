@@ -36,9 +36,9 @@
                                  
             <asp:GridView ID="gridSheets" runat="server" AutoGenerateColumns="False">
                 <Columns>
-                    <asp:TemplateField HeaderText="Diego">
+                    <asp:TemplateField HeaderText="tmpSheet">
                         <HeaderTemplate>
-                            <asp:CheckBox ID="chqHeader" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged" />
+                            <asp:CheckBox ID="chqHeader" runat="server" AutoPostBack="True" OnCheckedChanged="chqHeader_CheckedChanged" />
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:CheckBox ID="chqBody" runat="server" />
@@ -48,7 +48,7 @@
                 </Columns>
             </asp:GridView>
 
-            <asp:GridView Width="900px" ID="gridVooChegada" runat="server" AutoGenerateColumns="False">
+            <asp:GridView Width="900px" ID="gridVooChegada" runat="server" AutoGenerateColumns="False" Visible="false">
                 <Columns>
                     <asp:BoundField HeaderStyle-Width="150" DataField="NumeroVoo" HeaderText="Número Vôo"></asp:BoundField>
                     <asp:BoundField HeaderStyle-Width="150" DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}"></asp:BoundField>
@@ -59,8 +59,9 @@
                 </Columns>
             </asp:GridView>
 
-            <div id="LinkToDownload" runat="server"></div>
+            <br /><br />
 
+            <div id="LinkToDownload" runat="server"></div>
         </li>
     </ol>
 </asp:Content>

@@ -200,9 +200,7 @@ namespace ChronosTransfer.CLTransfer
             //{                
             //    throw ex;
             //}
-        }
-
-        
+        }        
 
         public String RetornaCarro(int Quantidade)
         {
@@ -254,8 +252,6 @@ namespace ChronosTransfer.CLTransfer
                     }
                 }
             }
-        }
-
-        
+        }        
     }
 }
