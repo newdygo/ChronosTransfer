@@ -52,6 +52,8 @@ namespace ChronosTransfer
         /// <param name="e"></param>
         protected void LinkButton_Click(object sender, EventArgs e)
         {
+            Pronto = false;
+
             FileInfo _File = new FileInfo(FileName);
 
             if (_File.Exists)
@@ -220,6 +222,5 @@ namespace ChronosTransfer
         }
 
         #endregion
-
     }
 }

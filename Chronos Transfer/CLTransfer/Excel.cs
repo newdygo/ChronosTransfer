@@ -10,6 +10,11 @@ namespace ChronosTransfer.CLTransfer
 {
     public class Excel : Chronos
     {
+        /// <summary>
+        /// Rotina utilizada para criar uma Sheet num excel.
+        /// </summary>
+        /// <param name="_Sheet"></param>
+        /// <param name="_Passageiros"></param>
         public void CreateSheet(String _Sheet, List<VooChegada> _Passageiros)
         {
             using (Conectar())
@@ -25,6 +30,11 @@ namespace ChronosTransfer.CLTransfer
             InsertPassageiroSheet(_Sheet, _Passageiros);
         }
 
+        /// <summary>
+        /// Rotina utilizada para inserir voo de chegada a sheet do Excel.
+        /// </summary>
+        /// <param name="_Sheet"></param>
+        /// <param name="_VoosChegada"></param>
         private void InsertPassageiroSheet(String _Sheet, List<VooChegada> _VoosChegada)
         {
             using (Conectar())
