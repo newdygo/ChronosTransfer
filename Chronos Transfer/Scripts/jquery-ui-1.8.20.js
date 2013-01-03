@@ -21,8 +21,8 @@ $.extend( $.ui, {
 		BACKSPACE: 8,
 		CAPS_LOCK: 20,
 		COMMA: 188,
-		COMMAND: 91,
-		COMMAND_LEFT: 91, // COMMAND
+		_Command: 91,
+		COMMAND_LEFT: 91, // _Command
 		COMMAND_RIGHT: 93,
 		CONTROL: 17,
 		DELETE: 46,
@@ -48,7 +48,7 @@ $.extend( $.ui, {
 		SPACE: 32,
 		TAB: 9,
 		UP: 38,
-		WINDOWS: 91 // COMMAND
+		WINDOWS: 91 // _Command
 	}
 });
 
@@ -7555,13 +7555,13 @@ $.extend(Datepicker.prototype, {
 						break; // next month/year on page down/+ ctrl
 				case 35: if (event.ctrlKey || event.metaKey) $.datepicker._clearDate(event.target);
 						handled = event.ctrlKey || event.metaKey;
-						break; // clear on ctrl or command +end
+						break; // clear on ctrl or _Command +end
 				case 36: if (event.ctrlKey || event.metaKey) $.datepicker._gotoToday(event.target);
 						handled = event.ctrlKey || event.metaKey;
-						break; // current on ctrl or command +home
+						break; // current on ctrl or _Command +home
 				case 37: if (event.ctrlKey || event.metaKey) $.datepicker._adjustDate(event.target, (isRTL ? +1 : -1), 'D');
 						handled = event.ctrlKey || event.metaKey;
-						// -1 day on ctrl or command +left
+						// -1 day on ctrl or _Command +left
 						if (event.originalEvent.altKey) $.datepicker._adjustDate(event.target, (event.ctrlKey ?
 									-$.datepicker._get(inst, 'stepBigMonths') :
 									-$.datepicker._get(inst, 'stepMonths')), 'M');
@@ -7569,10 +7569,10 @@ $.extend(Datepicker.prototype, {
 						break;
 				case 38: if (event.ctrlKey || event.metaKey) $.datepicker._adjustDate(event.target, -7, 'D');
 						handled = event.ctrlKey || event.metaKey;
-						break; // -1 week on ctrl or command +up
+						break; // -1 week on ctrl or _Command +up
 				case 39: if (event.ctrlKey || event.metaKey) $.datepicker._adjustDate(event.target, (isRTL ? -1 : +1), 'D');
 						handled = event.ctrlKey || event.metaKey;
-						// +1 day on ctrl or command +right
+						// +1 day on ctrl or _Command +right
 						if (event.originalEvent.altKey) $.datepicker._adjustDate(event.target, (event.ctrlKey ?
 									+$.datepicker._get(inst, 'stepBigMonths') :
 									+$.datepicker._get(inst, 'stepMonths')), 'M');
@@ -7580,7 +7580,7 @@ $.extend(Datepicker.prototype, {
 						break;
 				case 40: if (event.ctrlKey || event.metaKey) $.datepicker._adjustDate(event.target, +7, 'D');
 						handled = event.ctrlKey || event.metaKey;
-						break; // +1 week on ctrl or command +down
+						break; // +1 week on ctrl or _Command +down
 				default: handled = false;
 			}
 		else if (event.keyCode == 36 && event.ctrlKey) // display the date picker on ctrl+home
@@ -8778,7 +8778,7 @@ function isArray(a) {
 };
 
 /* Invoke the datepicker functionality.
-   @param  options  string - a command, optionally followed by additional parameters or
+   @param  options  string - a _Command, optionally followed by additional parameters or
                     Object - settings for attaching new datepicker functionality
    @return  jQuery object */
 $.fn.datepicker = function(options){

@@ -22,6 +22,7 @@ namespace ChronosTransfer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            new Passageiro().Conectar2();
             CreateLinkDownload();
         }
 
@@ -149,7 +150,7 @@ namespace ChronosTransfer
         {
             Passageiro _Passageiro = new Passageiro();
 
-            gridSheets.DataSource = _Passageiro.RetornarSchema(OleDbSchemaGuid.Tables);
+            gridSheets.DataSource = _Passageiro.RetornarSchema(OleDbSchemaGuid.Tables_Info);
             gridSheets.DataBind();
 
             HabilitarComponente(true);            

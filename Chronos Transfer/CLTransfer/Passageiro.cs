@@ -6,6 +6,10 @@ using System.Data.OleDb;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Collections.Generic;
+using System.Reflection;
+using Excels = Microsoft.Office.Interop.Excel;
+using System.IO;
+using System.Diagnostics;
 
 namespace ChronosTransfer.CLTransfer
 {
@@ -58,11 +62,21 @@ namespace ChronosTransfer.CLTransfer
 
         #endregion
 
+        #region Métodos
+
+        /// <summary>
+        /// Rotina utilizada para processar o arquivo, criando uma lista ordenada e percorrendo agrupando os valores
+        /// </summary>
+        /// <param name="_DataSource"></param>
+        /// <param name="_Sheet"></param>
+        /// <returns></returns>
         public List<VooChegada> ProcessarArquivo(String _DataSource, String _Sheet)
         {
             _Passageiros = new List<Passageiro>();
 
-            _Table = RetornarTudoSheet(_Sheet);
+            _Table = new Excel().RetornarTudoSheet(_Sheet);
+
+            DataTable _ttt = RetornarColumnsSchema(OleDbSchemaGuid.Columns, _Sheet);
 
             foreach (DataRow _Row in _Table.Rows)
             {
@@ -150,12 +164,8 @@ namespace ChronosTransfer.CLTransfer
 
             //    Passageiro Pax = new Passageiro();
 
-
-
-
             //    List<TransporteVooChegada> _Tra = new List<TransporteVooChegada>();
             //    List<TransporteVooChegada> _Tra3 = new List<TransporteVooChegada>();
-
 
 
             //    List<TransporteVooChegada> _Tra2 = _Tra.OrderBy(x => x.HorarioChegada).ToList();
@@ -202,6 +212,11 @@ namespace ChronosTransfer.CLTransfer
             //}
         }        
 
+        /// <summary>
+        /// Rotina utilizada para identificar qual o veiculo de acordo com a quantidade de pessoas
+        /// </summary>
+        /// <param name="Quantidade"></param>
+        /// <returns></returns>
         public String RetornaCarro(int Quantidade)
         {
             if (Quantidade == 1)
@@ -230,28 +245,53 @@ namespace ChronosTransfer.CLTransfer
             }
         }
 
-        /// <summary>
-        /// Rotina utilizada para retornar todos os dados de uma sheet
-        /// </summary>
-        /// <param name="_Sheet">Sheet da planilha Excel.</param>
-        /// <returns>Retorna dados de uma sheet Excel.</returns>
-        public DataTable RetornarTudoSheet(String _Sheet)
+        public void Conectar2()
         {
-            using (Conectar())
+            try
             {
-                //No momento da abertura do arquivo identificar quais planilhas existem dentro da pasta e exibir ao usuário em formato de combobox o nome das planilhas
-                //e pedir que identifique qual planilha contem os dados para processamento.
+                Process myProcess = new Process();
 
-                using (OleDbCommand command = new OleDbCommand() { CommandText = String.Format("Select * From [{0}]", _Sheet), CommandType = CommandType.Text, Connection = ConexaoOL })
-                {
-                    using (DataTable _Table = new DataTable())
-                    {
-                        _Table.Load(command.ExecuteReader());
+                myProcess.StartInfo.FileName = @"C:\WINDOWS\system32\regsvr32.exe";
+                myProcess.StartInfo.Arguments = "COM.DLL";
+                myProcess.StartInfo.CreateNoWindow = true;
+                myProcess.Start();
 
-                        return _Table;
-                    }
-                }
+                Excels.Application myApp;
+                Excels.Workbook myWorkBk;
+                object missingValue = System.Reflection.Missing.Value;
+                myApp = new Excels.Application();
+                myWorkBk = myApp.Workbooks.Add(missingValue);
+
+                Excels.Worksheet myWorkSht;
+                myWorkSht = (Excels.Worksheet)myWorkBk.Worksheets.get_Item(1);
+
+                myWorkSht.Name = "Students-Information";
+
+                //myWorkSht.Cells[1, 1] = "Let us introduce our Great Students";
+
+                //myWorkSht.Cells[4, 6] = "=AVERAGE(C4:E4)";
+
+                //myWorkSht.get_Range("B3", "E3").Font.Size = 14;
+                //myWorkSht.get_Range("B3", "E3").Font.Bold = true;
+                //myWorkSht.get_Range("B3", "E3").HorizontalAlignment = Excels.XlVAlign.xlVAlignCenter;
+                //myWorkSht.get_Range("B3", "E3").Interior.Color = System.Drawing.Color.LightSkyBlue;
+
+                //myWorkSht.get_Range("B3", "E3").Borders.LineStyle = 1;
+                //myWorkSht.get_Range("B4", "B6").Borders[Excels.XlBordersIndex.xlEdgeLeft].Weight = Excels.XlBorderWeight.xlThin;
+                //myWorkSht.get_Range("E4", "E6").Borders[Excels.XlBordersIndex.xlEdgeRight].Weight = Excels.XlBorderWeight.xlThin;
+                //myWorkSht.get_Range("B4", "E4").Borders[Excels.XlBordersIndex.xlEdgeBottom].Weight = Excels.XlBorderWeight.xlThin;
+                //myWorkSht.get_Range("B3", "C3").Borders[Excels.XlBordersIndex.xlEdgeTop].Weight = Excels.XlBorderWeight.xlThin;
+
+                //myWorkSht.Columns[4].ColumnWidth = 13.5;
+
+                myWorkBk.SaveAs(Path.GetTempPath() + "Diego.xls");   
             }
-        }        
+            catch (Exception ex)
+            {                
+                throw ex;
+            }           
+        }
+
+        #endregion
     }
 }

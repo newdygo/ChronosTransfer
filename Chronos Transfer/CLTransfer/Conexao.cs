@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web;
 using System.Data;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Data.OleDb;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.IO;
 
 namespace ChronosTransfer.CLTransfer
 {
@@ -61,12 +61,35 @@ namespace ChronosTransfer.CLTransfer
         {
             using (Conectar())
             {
-                using (DataTable _Table = new DataTable())
-                {
-                    return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null);
-                }
+                return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null).Select("Cardinality = 0").CopyToDataTable();
             }
         }
+
+        /// <summary>
+        /// Rotina utilizada para retornar as Sheets da planilha.
+        /// </summary>
+        /// <param name="_DataSource">Caminho do arquivo de conexão com o Excel.</param>
+        /// <returns>Retorn um datatable com os nomes das sheets da planilha Excel.</returns>
+        public int RetornarSchema(Guid _OleDbSchemaGuid, String _Sheet)
+        {
+            using (Conectar())
+            {
+                return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null).Select(String.Format("Cardinality = 0 And Table_Name = 'Transfer_{0}'", _Sheet)).Count();
+            }
+        }
+
+        /// <summary>
+        /// Rotina utilizada para retornar as Sheets da planilha.
+        /// </summary>
+        /// <param name="_DataSource">Caminho do arquivo de conexão com o Excel.</param>
+        /// <returns>Retorn um datatable com os nomes das sheets da planilha Excel.</returns>
+        public DataTable RetornarColumnsSchema(Guid _OleDbSchemaGuid, String _Sheet)
+        {
+            using (Conectar())
+            {
+                return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null);
+            }
+        }        
 
         #endregion
 
