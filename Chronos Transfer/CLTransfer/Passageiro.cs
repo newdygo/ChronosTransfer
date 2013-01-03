@@ -249,23 +249,14 @@ namespace ChronosTransfer.CLTransfer
         {
             try
             {
-                Process myProcess = new Process();
+            //    Process myProcess = new Process();
 
-                myProcess.StartInfo.FileName = @"C:\WINDOWS\system32\regsvr32.exe";
-                myProcess.StartInfo.Arguments = "COM.DLL";
-                myProcess.StartInfo.CreateNoWindow = true;
-                myProcess.Start();
+            //    myProcess.StartInfo.FileName = @"C:\WINDOWS\system32\regsvr32.exe";
+            //    myProcess.StartInfo.Arguments = "COM.DLL";
+            //    myProcess.StartInfo.CreateNoWindow = true;
+            //    myProcess.Start();
 
-                Excels.Application myApp;
-                Excels.Workbook myWorkBk;
-                object missingValue = System.Reflection.Missing.Value;
-                myApp = new Excels.Application();
-                myWorkBk = myApp.Workbooks.Add(missingValue);
-
-                Excels.Worksheet myWorkSht;
-                myWorkSht = (Excels.Worksheet)myWorkBk.Worksheets.get_Item(1);
-
-                myWorkSht.Name = "Students-Information";
+               
 
                 //myWorkSht.Cells[1, 1] = "Let us introduce our Great Students";
 
@@ -284,7 +275,9 @@ namespace ChronosTransfer.CLTransfer
 
                 //myWorkSht.Columns[4].ColumnWidth = 13.5;
 
-                myWorkBk.SaveAs(Path.GetTempPath() + "Diego.xls");   
+                 
+ 
+                
             }
             catch (Exception ex)
             {                

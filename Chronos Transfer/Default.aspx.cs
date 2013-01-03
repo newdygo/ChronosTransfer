@@ -10,6 +10,9 @@ using System.Net.Sockets;
 using System.Web.UI.WebControls;
 using ChronosTransfer.CLTransfer;
 using System.Collections.Generic;
+using Excels = Microsoft.Office.Interop.Excel;
+using System.IO;
+using System.Diagnostics;
 
 namespace ChronosTransfer
 {
@@ -22,8 +25,28 @@ namespace ChronosTransfer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            new Passageiro().Conectar2();
-            CreateLinkDownload();
+            Excels.Application myApp;
+            Excels.Workbook myWorkBk;
+            object missingValue = System.Reflection.Missing.Value;
+            myApp = new Excels.Application();
+            myWorkBk = myApp.Workbooks.Add(missingValue);
+
+            Excels.Worksheet myWorkSht;
+            myWorkSht = (Excels.Worksheet)myWorkBk.Worksheets.get_Item(1);
+
+            myWorkSht.Name = "Students-Information";
+
+            if (!File.Exists(Path.GetTempPath() + "Diego.xls"))
+            {
+                myWorkBk.SaveAs(Path.GetTempPath() + "Diego.xls");
+            }
+            
+            LinkButton _LinkButton = new LinkButton();
+
+            _LinkButton.Text = String.Format("Download Transfer Planilha 'Processado_{0}'", Path.GetFileName(Path.GetTempPath() + "Diego.xls"));
+            _LinkButton.Click += new EventHandler(LinkButton_Click);
+
+            LinkToDownload.Controls.Add(_LinkButton);
         }
 
         /// <summary>
@@ -55,12 +78,12 @@ namespace ChronosTransfer
         {
             Pronto = false;
 
-            FileInfo _File = new FileInfo(FileName);
+            FileInfo _File = new FileInfo(Path.GetTempPath() + "Diego.xls");
 
             if (_File.Exists)
             {
                 Response.Clear();
-                Response.AddHeader("Content-Disposition", String.Format("attachment; filename = Processado_{0}", _File.Name));
+                Response.AddHeader("Content-Disposition", String.Format("attachment; filename = {0}Diego.xls", Path.GetTempPath()));
 
                 //Response.AddHeader("Content-Length", _File.Length.ToString());
                 //Response.ContentType = "application/octet-stream";
