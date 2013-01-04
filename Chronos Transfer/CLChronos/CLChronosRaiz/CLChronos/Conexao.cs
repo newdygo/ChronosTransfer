@@ -7,11 +7,10 @@ using System.Data.OleDb;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections.Generic;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
 {
-    //[DebuggerNonUserCode(), Browsable(false)]
+    [DebuggerNonUserCode(), Browsable(false)]
     public abstract class Conexao : IDisposable
     {
         #region Contrutores
@@ -24,7 +23,7 @@ namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
         /// <summary>
         /// Contrutor que renova a origem da conexão baseada no parametro passado.
         /// </summary>
-        /// <param name="_Source">Origem do arquivo de conexão (Excel)</param>
+        /// <param name="_Source">Origem do arquivo de conexão (excel)</param>
         public Conexao(String _Source) 
         { 
             Source = _Source; 
@@ -34,10 +33,10 @@ namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
 
         #region Propriedades
 
-        private static String Source { get; set; }
-
         #endregion
         
+        public static String Source { get; set; }
+
         #region Variáveis
 
         public OleDbConnection ConexaoOL = new OleDbConnection();
@@ -45,28 +44,7 @@ namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
         #endregion
 
         #region OleDbConnextion
-
-        /// <summary>
-        /// Rotina utilizada para conectar a uma fonte de dados (Excel).
-        /// </summary>
-        /// <returns>Retorna um Workbook.</returns>
-        public Excel.Workbook ConectarExcel()
-        {
-            try
-            {
-                Object _Miss = Type.Missing;
-
-                Excel.Application _Application = new Excel.Application();
-                Excel.Workbook _Workbook = _Application.Workbooks.Open(Source, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss);
-
-                return _Workbook;
-            }
-            catch
-            {                
-                return null;
-            }            
-        }
-
+        
         /// <summary>
         /// Rotina utilizada para conectar a um banco de dados
         /// </summary>
@@ -95,50 +73,7 @@ namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
         }
 
         #endregion
-
-        #region Úteis
-
-        /// <summary>
-        /// Rotina utilizada para retornar as Sheets da planilha.
-        /// </summary>
-        /// <param name="_DataSource">Caminho do arquivo de conexão com o Excel.</param>
-        /// <returns>Retorn um datatable com os nomes das sheets da planilha Excel.</returns>
-        public DataTable RetornarSchema(Guid _OleDbSchemaGuid)
-        {
-            using (Conectar())
-            {
-                return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null).Select("Cardinality = 0").CopyToDataTable();
-            }
-        }
-
-        /// <summary>
-        /// Rotina utilizada para retornar as Sheets da planilha.
-        /// </summary>
-        /// <param name="_DataSource">Caminho do arquivo de conexão com o Excel.</param>
-        /// <returns>Retorn um datatable com os nomes das sheets da planilha Excel.</returns>
-        public int RetornarSchema(Guid _OleDbSchemaGuid, String _Sheet)
-        {
-            using (Conectar())
-            {
-                return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null).Select(String.Format("Cardinality = 0 And Table_Name = 'Transfer_{0}'", _Sheet)).Count();
-            }
-        }
-
-        /// <summary>
-        /// Rotina utilizada para retornar as Sheets da planilha.
-        /// </summary>
-        /// <param name="_DataSource">Caminho do arquivo de conexão com o Excel.</param>
-        /// <returns>Retorn um datatable com os nomes das sheets da planilha Excel.</returns>
-        public DataTable RetornarColumnsSchema(Guid _OleDbSchemaGuid, String _Sheet)
-        {
-            using (Conectar())
-            {
-                return ConexaoOL.GetOleDbSchemaTable(_OleDbSchemaGuid, null);
-            }
-        }        
-
-        #endregion
-
+        
         #region IDisposable Members
 
         public void Dispose()

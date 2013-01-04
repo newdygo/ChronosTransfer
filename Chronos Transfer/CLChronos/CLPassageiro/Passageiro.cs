@@ -13,7 +13,13 @@ namespace ChronosTransfer.CLChronos.CLPassageiro
 {
     public class Passageiro : Chronos
     {
+        #region Construtores
+
+        public Passageiro() : base() {}
+
         public Passageiro(String _Source) : base(_Source) {}
+
+        #endregion
 
         #region Propriedades
 
