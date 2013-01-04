@@ -8,7 +8,6 @@ using System.Web.UI;
 using System.Data.OleDb;
 using System.Net.Sockets;
 using System.Web.UI.WebControls;
-using ChronosTransfer.CLTransfer;
 using System.Collections.Generic;
 using ChronosTransfer.CLChronos.CLExcel;
 using Exc = Microsoft.Office.Interop.Excel;

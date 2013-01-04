@@ -292,8 +292,6 @@
     <Compile Include="CLChronos\CLExcel\Excel.cs" />
     <Compile Include="CLChronos\CLChronosRaiz\CLLog\LogErro.cs" />
     <Compile Include="CLChronos\CLPassageiro\Passageiro.cs" />
-    <Compile Include="CLChronos\Sheet.cs" />
-    <Compile Include="CLChronos\TransporteVooChegada.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
