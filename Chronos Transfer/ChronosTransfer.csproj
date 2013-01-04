@@ -284,13 +284,16 @@
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CLTransfer\Chronos.cs" />
-    <Compile Include="CLTransfer\Conexao.cs" />
-    <Compile Include="CLTransfer\Excel.cs" />
-    <Compile Include="CLTransfer\LogErro.cs" />
-    <Compile Include="CLTransfer\Passageiro.cs" />
-    <Compile Include="CLTransfer\Sheet.cs" />
-    <Compile Include="CLTransfer\TransporteVooChegada.cs" />
+    <Compile Include="CLChronos\CLBasico\Veiculo.cs" />
+    <Compile Include="CLChronos\CLChronosRaiz\CLChronos\Chronos.cs" />
+    <Compile Include="CLChronos\CLChronosRaiz\CLChronos\Conexao.cs" />
+    <Compile Include="CLChronos\CLTransfer\Transfer.cs" />
+    <Compile Include="CLChronos\CLVoo\Voo.cs" />
+    <Compile Include="CLChronos\Excel.cs" />
+    <Compile Include="CLChronos\CLChronosRaiz\CLLog\LogErro.cs" />
+    <Compile Include="CLChronos\CLPassageiro\Passageiro.cs" />
+    <Compile Include="CLChronos\Sheet.cs" />
+    <Compile Include="CLChronos\TransporteVooChegada.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

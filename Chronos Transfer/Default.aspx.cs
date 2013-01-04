@@ -10,9 +10,9 @@ using System.Net.Sockets;
 using System.Web.UI.WebControls;
 using ChronosTransfer.CLTransfer;
 using System.Collections.Generic;
-using Excels = Microsoft.Office.Interop.Excel;
-using System.IO;
-using System.Diagnostics;
+using ChronosTransfer.CLChronos.CLPassageiro;
+using Exc = Microsoft.Office.Interop.Excel;
+
 
 namespace ChronosTransfer
 {
@@ -25,28 +25,7 @@ namespace ChronosTransfer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Excels.Application myApp;
-            Excels.Workbook myWorkBk;
-            object missingValue = System.Reflection.Missing.Value;
-            myApp = new Excels.Application();
-            myWorkBk = myApp.Workbooks.Add(missingValue);
-
-            Excels.Worksheet myWorkSht;
-            myWorkSht = (Excels.Worksheet)myWorkBk.Worksheets.get_Item(1);
-
-            myWorkSht.Name = "Students-Information";
-
-            if (!File.Exists(Path.GetTempPath() + "Diego.xls"))
-            {
-                myWorkBk.SaveAs(Path.GetTempPath() + "Diego.xls");
-            }
-            
-            LinkButton _LinkButton = new LinkButton();
-
-            _LinkButton.Text = String.Format("Download Transfer Planilha 'Processado_{0}'", Path.GetFileName(Path.GetTempPath() + "Diego.xls"));
-            _LinkButton.Click += new EventHandler(LinkButton_Click);
-
-            LinkToDownload.Controls.Add(_LinkButton);
+            //CreateLinkDownload();
         }
 
         /// <summary>
@@ -56,7 +35,18 @@ namespace ChronosTransfer
         /// <param name="e"></param>
         protected void btnUpload_Click(object sender, EventArgs e)
         {
-            CopiarArquivo();
+            Passageiro _P = new Passageiro(Path.GetTempPath() + "Transfer.xls");
+
+            Exc.Workbook _Wok = _P.ConectarExcel();
+
+            object oo = _Wok.Worksheets;
+            
+            foreach (Exc.Worksheet _Sh in _Wok.Worksheets)
+            {
+                lblStatusUpload.Text = _Sh.Name;
+            }
+
+            //CopiarArquivo();
         }
 
         /// <summary>
@@ -66,7 +56,7 @@ namespace ChronosTransfer
         /// <param name="e"></param>
         protected void btnProcessar_Click(object sender, EventArgs e)
         {
-            ProcessarArquivo();
+            //ProcessarArquivo();
         }
 
         /// <summary>
@@ -76,21 +66,21 @@ namespace ChronosTransfer
         /// <param name="e"></param>
         protected void LinkButton_Click(object sender, EventArgs e)
         {
-            Pronto = false;
+            //Pronto = false;
 
-            FileInfo _File = new FileInfo(Path.GetTempPath() + "Diego.xls");
+            //FileInfo _File = new FileInfo(FileName);
 
-            if (_File.Exists)
-            {
-                Response.Clear();
-                Response.AddHeader("Content-Disposition", String.Format("attachment; filename = {0}Diego.xls", Path.GetTempPath()));
+            //if (_File.Exists)
+            //{
+            //    Response.Clear();
+            //    Response.AddHeader("Content-Disposition", String.Format("attachment; filename = Processado_{0}", _File.Name));
 
-                //Response.AddHeader("Content-Length", _File.Length.ToString());
-                //Response.ContentType = "application/octet-stream";
+            //    //Response.AddHeader("Content-Length", _File.Length.ToString());
+            //    //Response.ContentType = "application/octet-stream";
 
-                Response.WriteFile(_File.FullName);
-                Response.End();
-            }
+            //    Response.WriteFile(_File.FullName);
+            //    Response.End();
+            //}
         }
 
         /// <summary>
@@ -100,15 +90,15 @@ namespace ChronosTransfer
         /// <param name="e"></param>
         protected void chqHeader_CheckedChanged(object sender, EventArgs e)
         {
-            foreach (GridViewRow _Row in gridSheets.Rows)
-            {
-                CheckBox _CheckBox = (CheckBox)_Row.FindControl("chqBody");
+            //foreach (GridViewRow _Row in gridSheets.Rows)
+            //{
+            //    CheckBox _CheckBox = (CheckBox)_Row.FindControl("chqBody");
 
-                if (_CheckBox != null)
-                {
-                    _CheckBox.Checked = (sender as CheckBox).Checked;
-                }
-            }
+            //    if (_CheckBox != null)
+            //    {
+            //        _CheckBox.Checked = (sender as CheckBox).Checked;
+            //    }
+            //}
         }
 
         #endregion
@@ -120,50 +110,50 @@ namespace ChronosTransfer
         /// </summary>
         private void CopiarArquivo()
         {
-            if (FileTransfer.HasFile)
-            {
-                FileName = String.Format("{0}Transfer.xls", Path.GetTempPath());
+            //if (FileTransfer.HasFile)
+            //{
+            //    FileName = String.Format("{0}Transfer.xls", Path.GetTempPath());
                 
-                if (Path.GetExtension(FileTransfer.FileName).ToLower() == ".xls")
-                {
-                    if (File.Exists(FileName))
-                    {
-                        try
-                        {
-                            File.Delete(FileName);
+            //    if (Path.GetExtension(FileTransfer.FileName).ToLower() == ".xls")
+            //    {
+            //        if (File.Exists(FileName))
+            //        {
+            //            try
+            //            {
+            //                File.Delete(FileName);
 
-                            FileTransfer.SaveAs(FileName);
+            //                FileTransfer.SaveAs(FileName);
 
-                            lblStatusUpload.Text = "Arquivo carregado com sucesso!";
+            //                lblStatusUpload.Text = "Arquivo carregado com sucesso!";
 
-                            CarregarSchema();
-                        }
-                        catch (Exception ex)
-                        {
-                            lblStatusUpload.Text = String.Format("Arquivo não carregado! \n\nMotivo: {0}", ex.Message);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            FileTransfer.SaveAs(FileName);
+            //                CarregarSchema();
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                lblStatusUpload.Text = String.Format("Arquivo não carregado! \n\nMotivo: {0}", ex.Message);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            try
+            //            {
+            //                FileTransfer.SaveAs(FileName);
 
-                            lblStatusUpload.Text = "Arquivo carregado com sucesso!";
+            //                lblStatusUpload.Text = "Arquivo carregado com sucesso!";
 
-                            CarregarSchema();
-                        }
-                        catch (Exception ex)
-                        {
-                            lblStatusUpload.Text = String.Format("Arquivo não carregado! \n\nMotivo: {0}", ex.Message);
-                        }
-                    }
-                }                
-            }
-            else
-            {
-                lblStatusUpload.Text = "Arquivo que tentou ser carregado não é um Excel válido!";
-            }            
+            //                CarregarSchema();
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                lblStatusUpload.Text = String.Format("Arquivo não carregado! \n\nMotivo: {0}", ex.Message);
+            //            }
+            //        }
+            //    }                
+            //}
+            //else
+            //{
+            //    lblStatusUpload.Text = "Arquivo que tentou ser carregado não é um Excel válido!";
+            //}            
         }
 
         /// <summary>
@@ -171,12 +161,12 @@ namespace ChronosTransfer
         /// </summary>
         private void CarregarSchema()
         {
-            Passageiro _Passageiro = new Passageiro();
+            //Passageiro _Passageiro = new Passageiro();
 
-            gridSheets.DataSource = _Passageiro.RetornarSchema(OleDbSchemaGuid.Tables_Info);
-            gridSheets.DataBind();
+            //gridSheets.DataSource = _Passageiro.RetornarSchema(OleDbSchemaGuid.Tables_Info);
+            //gridSheets.DataBind();
 
-            HabilitarComponente(true);            
+            //HabilitarComponente(true);            
         }
 
         /// <summary>
@@ -196,26 +186,26 @@ namespace ChronosTransfer
 
         private void ProcessarArquivo()
         {
-            foreach (GridViewRow _Row in gridSheets.Rows)
-            {
-                CheckBox _CheckBox = (CheckBox)_Row.FindControl("chqBody");
+            //foreach (GridViewRow _Row in gridSheets.Rows)
+            //{
+            //    CheckBox _CheckBox = (CheckBox)_Row.FindControl("chqBody");
 
-                if (_CheckBox.Checked)
-                {
-                    List<VooChegada> _VooChegada = new Passageiro().ProcessarArquivo(FileName, _Row.Cells[1].Text);
+            //    if (_CheckBox.Checked)
+            //    {
+            //        List<VooChegada> _VooChegada = new Passageiro().ProcessarArquivo(FileName, _Row.Cells[1].Text);
                     
-                    CreateSheet(_Row.Cells[1].Text, _VooChegada);
+            //        CreateSheet(_Row.Cells[1].Text, _VooChegada);
 
-                    gridVooChegada.DataSource = _VooChegada;
-                    gridVooChegada.DataBind();                                      
-                }
-            }
+            //        gridVooChegada.DataSource = _VooChegada;
+            //        gridVooChegada.DataBind();                                      
+            //    }
+            //}
 
-            Pronto = true;
+            //Pronto = true;
 
-            CreateLinkDownload();
+            //CreateLinkDownload();
 
-            HabilitarComponente(false);            
+            //HabilitarComponente(false);            
         }
 
         /// <summary>
@@ -225,8 +215,8 @@ namespace ChronosTransfer
         /// <param name="_VooChegada"></param>
         private void CreateSheet(String _Sheet, List<VooChegada> _VooChegada)
         {
-            Excel _Excel = new Excel();
-            _Excel.CreateSheet(_Sheet, _VooChegada);
+            //Excel _Excel = new Excel();
+            //_Excel.CreateSheet(_Sheet, _VooChegada);
         }
 
         /// <summary>
@@ -234,15 +224,15 @@ namespace ChronosTransfer
         /// </summary>
         private void CreateLinkDownload()
         {
-            if (Pronto)
-            {
-                LinkButton _LinkButton = new LinkButton();
+            //if (Pronto)
+            //{
+            //    LinkButton _LinkButton = new LinkButton();
 
-                _LinkButton.Text = String.Format("Download Transfer Planilha 'Processado_{0}'", Path.GetFileName(FileName));
-                _LinkButton.Click += new EventHandler(LinkButton_Click);
+            //    _LinkButton.Text = String.Format("Download Transfer Planilha 'Processado_{0}'", Path.GetFileName(FileName));
+            //    _LinkButton.Click += new EventHandler(LinkButton_Click);
 
-                LinkToDownload.Controls.Add(_LinkButton);
-            }
+            //    LinkToDownload.Controls.Add(_LinkButton);
+            //}
         }
 
         #endregion

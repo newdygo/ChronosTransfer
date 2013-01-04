@@ -7,12 +7,37 @@ using System.Data.OleDb;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Collections.Generic;
+using Excel = Microsoft.Office.Interop.Excel;
 
-namespace ChronosTransfer.CLTransfer
+namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
 {
-    [DebuggerNonUserCode(), Browsable(false)]
+    //[DebuggerNonUserCode(), Browsable(false)]
     public abstract class Conexao : IDisposable
     {
+        #region Contrutores
+
+        /// <summary>
+        /// Contrutor vazio da conexão que conecta com base na String já existente.
+        /// </summary>
+        public Conexao() {}
+
+        /// <summary>
+        /// Contrutor que renova a origem da conexão baseada no parametro passado.
+        /// </summary>
+        /// <param name="_Source">Origem do arquivo de conexão (Excel)</param>
+        public Conexao(String _Source) 
+        { 
+            Source = _Source; 
+        }
+
+        #endregion
+
+        #region Propriedades
+
+        private static String Source { get; set; }
+
+        #endregion
+        
         #region Variáveis
 
         public OleDbConnection ConexaoOL = new OleDbConnection();
@@ -20,6 +45,27 @@ namespace ChronosTransfer.CLTransfer
         #endregion
 
         #region OleDbConnextion
+
+        /// <summary>
+        /// Rotina utilizada para conectar a uma fonte de dados (Excel).
+        /// </summary>
+        /// <returns>Retorna um Workbook.</returns>
+        public Excel.Workbook ConectarExcel()
+        {
+            try
+            {
+                Object _Miss = Type.Missing;
+
+                Excel.Application _Application = new Excel.Application();
+                Excel.Workbook _Workbook = _Application.Workbooks.Open(Source, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss, _Miss);
+
+                return _Workbook;
+            }
+            catch
+            {                
+                return null;
+            }            
+        }
 
         /// <summary>
         /// Rotina utilizada para conectar a um banco de dados
