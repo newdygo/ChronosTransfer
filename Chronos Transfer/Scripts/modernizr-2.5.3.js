@@ -898,7 +898,7 @@ window.Modernizr = (function( window, document, undefined ) {
                       bool = inputElem.checkValidity && inputElem.checkValidity() === false;
 
                     } else if ( /^color$/.test(inputElemType) ) {
-                        // chuck into DOM and force reflow for Opera bug in 11.00
+                        // chuck into DOM and force reflow for Opera bug in 11,00
                         // github.com/Modernizr/Modernizr/issues#issue/159
                         docElement.appendChild(inputElem);
                         docElement.offsetWidth;

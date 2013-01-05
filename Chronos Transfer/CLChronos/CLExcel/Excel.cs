@@ -106,7 +106,16 @@ namespace ChronosTransfer.CLChronos.CLExcel
                 {
                     using (OleDbCommand _Command = new OleDbCommand() { CommandType = CommandType.Text, Connection = ConexaoOL })
                     {
-                        _Command.CommandText = String.Format("Drop Table [Transfer_{0}])", _Sheet.Replace("$", String.Empty));
+                        _Command.CommandText = String.Format("Drop Table [TransferChegada_{0}])", _Sheet.Replace("$", String.Empty));
+                        _Command.ExecuteNonQuery();
+                    }
+                }
+
+                using (Conectar())
+                {
+                    using (OleDbCommand _Command = new OleDbCommand() { CommandType = CommandType.Text, Connection = ConexaoOL })
+                    {
+                        _Command.CommandText = String.Format("Drop Table [TransferRetorno_{0}])", _Sheet.Replace("$", String.Empty));
                         _Command.ExecuteNonQuery();
                     }
                 }
@@ -116,7 +125,16 @@ namespace ChronosTransfer.CLChronos.CLExcel
             {
                 using (OleDbCommand _Command = new OleDbCommand() { CommandType = CommandType.Text, Connection = ConexaoOL })
                 {
-                    _Command.CommandText = String.Format("Create Table [Transfer_{0}] ([Nome] varchar(255), [Documento] varchar(255), [N° Vôo] varchar(10), [Data] date, [Cidade Origem] varchar(255), [Cidade Destino] varchar(255), [Horário Saída] time, [Horário Chegada] time, [Veículo] varchar(255), [Valor] float)", _Sheet.Replace("$", String.Empty));
+                    _Command.CommandText = String.Format("Create Table [TransferChegada_{0}] ([Nome] String, [Documento] String, [N° Vôo] String, [Data] String, [Cidade Origem] String, [Cidade Destino] String, [Horário Saída] String, [Horário Chegada] String, [Transfer] String, [Veículo] String, [Valor] Currency)", _Sheet.Replace("$", String.Empty));
+                    _Command.ExecuteNonQuery();
+                }
+            }
+
+            using (Conectar())
+            {
+                using (OleDbCommand _Command = new OleDbCommand() { CommandType = CommandType.Text, Connection = ConexaoOL })
+                {
+                    _Command.CommandText = String.Format("Create Table [TransferRetorno_{0}] ([Nome] String, [Documento] String, [N° Vôo] String, [Data] String, [Cidade Origem] String, [Cidade Destino] String, [Horário Saída] String, [Horário Chegada] String, [Transfer] String, [Veículo] String, [Valor] Currency )", _Sheet.Replace("$", String.Empty));
                     _Command.ExecuteNonQuery();
                 }
             }
@@ -127,7 +145,7 @@ namespace ChronosTransfer.CLChronos.CLExcel
         /// </summary>
         /// <param name="_Sheet"></param>
         /// <param name="_Transfer"></param>
-        public void InsertPassageiroSheet(String _Sheet, Transfer _Transfer)
+        public void InsertPassageiroSheetChegada(String _Sheet, Transfer _Transfer)
         {
             using (Conectar())
             {
@@ -135,15 +153,40 @@ namespace ChronosTransfer.CLChronos.CLExcel
                 {
                     using (OleDbCommand _Command = new OleDbCommand() { CommandType = CommandType.Text, Connection = ConexaoOL })
                     {
-                        _Command.CommandText = String.Format("Insert Into [Transfer_{0}] ([Nome], [Documento], [N° Vôo], [Data], [Cidade Origem], [Cidade Destino], [Horário Saída], [Horário Chegada], [Veículo], [Valor]) values ('{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')",
+                        _Command.CommandText = String.Format("Insert Into [TransferChegada_{0}] ([Nome], [Documento], [N° Vôo], [Data], [Cidade Origem], [Cidade Destino], [Horário Saída], [Horário Chegada], [Transfer], [Veículo], [Valor]) values ('{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}')",
                             _Sheet.Replace("$", String.Empty),
-                            _Passageiro.Nome, _Passageiro.Documento, _Passageiro.VooChegada.NumeroVoo, _Passageiro.VooChegada.Data,
-                            _Passageiro.VooChegada.CidadeOrigem, _Passageiro.VooChegada.CidadeDestino, _Passageiro.VooChegada.HorarioSaida,
-                            _Passageiro.VooChegada.HorarioChegada, _Transfer.Veiculo.Nome, _Transfer.Veiculo.ValorViagem);
+                            _Passageiro.Nome, _Passageiro.Documento, _Passageiro.VooChegada.NumeroVoo, _Passageiro.VooChegada.Data.ToShortDateString(),
+                            _Passageiro.VooChegada.CidadeOrigem, _Passageiro.VooChegada.CidadeDestino, _Passageiro.VooChegada.HorarioSaida.ToShortTimeString(),
+                            _Passageiro.VooChegada.HorarioChegada.ToShortTimeString(), _Transfer.Nome, _Transfer.Veiculo.Nome, _Transfer.Veiculo.ValorViagem);
 
                         _Command.ExecuteNonQuery();
                     }
                 }   
+            }
+        }
+
+        /// <summary>
+        /// Rotina utilizada para inserir voo de chegada a sheet do Excel.
+        /// </summary>
+        /// <param name="_Sheet"></param>
+        /// <param name="_Transfer"></param>
+        public void InsertPassageiroSheetRetorno(String _Sheet, Transfer _Transfer)
+        {
+            using (Conectar())
+            {
+                foreach (Passageiro _Passageiro in _Transfer.Passageiros)
+                {
+                    using (OleDbCommand _Command = new OleDbCommand() { CommandType = CommandType.Text, Connection = ConexaoOL })
+                    {
+                        _Command.CommandText = String.Format("Insert Into [TransferRetorno_{0}] ([Nome], [Documento], [N° Vôo], [Data], [Cidade Origem], [Cidade Destino], [Horário Saída], [Horário Chegada], [Transfer], [Veículo], [Valor]) values ('{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}')",
+                            _Sheet.Replace("$", String.Empty),
+                            _Passageiro.Nome, _Passageiro.Documento, _Passageiro.VooRetorno.NumeroVoo, _Passageiro.VooRetorno.Data.ToShortDateString(),
+                            _Passageiro.VooRetorno.CidadeOrigem, _Passageiro.VooRetorno.CidadeDestino, _Passageiro.VooRetorno.HorarioSaida.ToShortTimeString(),
+                            _Passageiro.VooRetorno.HorarioChegada.ToShortTimeString(), _Transfer.Nome, _Transfer.Veiculo.Nome, _Transfer.Veiculo.ValorViagem);
+
+                        _Command.ExecuteNonQuery();
+                    }
+                }
             }
         }
     }

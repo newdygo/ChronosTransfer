@@ -204,7 +204,8 @@ namespace ChronosTransfer
 
                     foreach (Transfer _TransferTemp in _Transfers)
                     {
-                        _Excel.InsertPassageiroSheet(_Row.Cells[1].Text, _TransferTemp);
+                        _Excel.InsertPassageiroSheetChegada(_Row.Cells[1].Text, _TransferTemp);
+                        _Excel.InsertPassageiroSheetRetorno(_Row.Cells[1].Text, _TransferTemp);
                     }
 
                     //gridVooChegada.DataSource = _Transfers;
