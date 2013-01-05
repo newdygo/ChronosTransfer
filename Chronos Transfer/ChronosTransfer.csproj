@@ -288,6 +288,7 @@
     <Compile Include="CLChronos\CLChronosRaiz\CLChronos\Chronos.cs" />
     <Compile Include="CLChronos\CLChronosRaiz\CLChronos\Conexao.cs" />
     <Compile Include="CLChronos\CLTransfer\Transfer.cs" />
+    <Compile Include="CLChronos\CLTransfer\TransferExibicaoChegada.cs" />
     <Compile Include="CLChronos\CLVoo\Voo.cs" />
     <Compile Include="CLChronos\CLExcel\Excel.cs" />
     <Compile Include="CLChronos\CLChronosRaiz\CLLog\LogErro.cs" />

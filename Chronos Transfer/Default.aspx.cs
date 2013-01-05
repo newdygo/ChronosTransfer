@@ -208,8 +208,8 @@ namespace ChronosTransfer
                         _Excel.InsertPassageiroSheetRetorno(_Row.Cells[1].Text, _TransferTemp);
                     }
 
-                    //gridVooChegada.DataSource = _Transfers;
-                    //gridVooChegada.DataBind();
+                    gridVooChegada.DataSource = new TransferExibicaoChegada().GetExibicaoChegada(_Transfers);
+                    gridVooChegada.DataBind();
                 }
             }
 

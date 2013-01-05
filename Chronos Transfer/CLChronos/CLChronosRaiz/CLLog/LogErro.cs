@@ -6,9 +6,9 @@ using System.Collections.Generic;
 namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLLog
 {
     public class LogErro
-    {
-        //int NumeroLinha { get; set; }
-        //String Passageiro { get; set; }
-        //String Valor { get; set; }
+    {   
+        public int NumeroLinha { get; set; }
+        public String Nome { get; set; }
+        public String Valor { get; set; }
     }
 }

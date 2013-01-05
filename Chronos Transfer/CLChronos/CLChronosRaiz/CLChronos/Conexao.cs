@@ -33,10 +33,10 @@ namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
 
         #region Propriedades
 
-        #endregion
-        
         public static String Source { get; set; }
 
+        #endregion
+        
         #region Variáveis
 
         public OleDbConnection ConexaoOL = new OleDbConnection();

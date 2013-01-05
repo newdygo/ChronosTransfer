@@ -51,34 +51,23 @@
                 </Columns>
             </asp:GridView>
 
-            <asp:GridView Width="900px" ID="gridVooChegada" runat="server" AutoGenerateColumns="False" Visible="False">
+            <asp:GridView Width="1000px" ID="gridVooChegada" runat="server" AutoGenerateColumns="False" Visible="False">
                 <Columns>
-                    <asp:BoundField DataField="Nome" HeaderText="Nome" />
-                    <asp:BoundField DataField="Documento" HeaderText="Documento" />
-                    <asp:BoundField HeaderStyle-Width="150" DataField="NumeroVoo" HeaderText="Número Vôo">
-<HeaderStyle Width="150px"></HeaderStyle>
-                    </asp:BoundField>
-                    <asp:BoundField HeaderStyle-Width="150" DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}">
-<HeaderStyle Width="150px"></HeaderStyle>
-                    </asp:BoundField>
-                    <asp:BoundField DataField="Cidade Origem" HeaderText="Cidade Origem" />
-                    <asp:BoundField DataField="Cidade Destino" HeaderText="Cidade Destino" />
-                    <asp:BoundField HeaderStyle-Width="150" DataField="HorarioSaida" HeaderText="Horário Saída" DataFormatString="{0:HH:mm:ss} ">
-<HeaderStyle Width="150px"></HeaderStyle>
-                    </asp:BoundField>
-                    <asp:BoundField HeaderStyle-Width="150" DataField="HorarioChegada" HeaderText="Horário Chegada" DataFormatString="{0:HH:mm:ss} ">
-<HeaderStyle Width="150px"></HeaderStyle>
-                    </asp:BoundField>
-                    <asp:BoundField HeaderStyle-Width="150" DataField="TipoVeiculo" HeaderText="Veículo">
-<HeaderStyle Width="150px"></HeaderStyle>
-                    </asp:BoundField>
-                    <asp:BoundField HeaderStyle-Width="200" DataField="Valor" HeaderText="Valor"></asp:BoundField>
+                    <asp:BoundField HeaderStyle-Width="200" DataField="Nome" HeaderText="Nome" />
+                    <asp:BoundField HeaderStyle-Width="150" DataField="NumeroVoo" HeaderText="Número Vôo" />
+                    <asp:BoundField HeaderStyle-Width="150" DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
+                    <asp:BoundField HeaderStyle-Width="200" DataField="CidadeDestino" HeaderText="Cidade Destino" />
+                    <asp:BoundField HeaderStyle-Width="150" DataField="HorarioSaida" HeaderText="Horário Saída" DataFormatString="{0:HH:mm:ss} " />
+                    <asp:BoundField HeaderStyle-Width="250" DataField="HorarioChegada" HeaderText="Horário Chegada" DataFormatString="{0:HH:mm:ss} " />
+                    <asp:BoundField HeaderStyle-Width="150" DataField="Veiculo" HeaderText="Veículo" />
+                    <asp:BoundField HeaderStyle-Width="150" DataField="Valor" HeaderText="Valor" />
                 </Columns>
             </asp:GridView>
 
             <br /><br />
 
             <div id="LinkToDownload" runat="server"></div>
+
         </li>
     </ol>
 </asp:Content>

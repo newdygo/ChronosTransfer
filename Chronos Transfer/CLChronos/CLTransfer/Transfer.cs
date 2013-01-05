@@ -11,6 +11,7 @@ using ChronosTransfer.CLChronos.CLExcel;
 using ChronosTransfer.CLChronos.CLBasico;
 using ChronosTransfer.CLChronos.CLPassageiro;
 using ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos;
+using ChronosTransfer.CLChronos.CLChronosRaiz.CLLog;
 
 namespace ChronosTransfer.CLChronos.CLTransfer
 {
@@ -114,6 +115,11 @@ namespace ChronosTransfer.CLChronos.CLTransfer
                 {
                     //Gerar Log do ocorrido e em qual linha e continuar, no final verificar o logo e exibir para o usuário corrigir as pendências.
                     //Não exibir o resultado caso o log seja maior que 0. exibir o log.
+
+                    LogErro _Erro = new LogErro();
+
+                    
+
                     continue;
                 }
             }
@@ -155,7 +161,7 @@ namespace ChronosTransfer.CLChronos.CLTransfer
             }
 
             return _Transfers;
-        }
+        }        
 
         #endregion
     }

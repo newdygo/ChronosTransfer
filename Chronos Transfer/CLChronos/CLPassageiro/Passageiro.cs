@@ -21,9 +21,35 @@ namespace ChronosTransfer.CLChronos.CLPassageiro
 
         #endregion
 
+        #region Variáveis
+
+        private String _Nome;
+        private Voo _VooChegada;
+        private Voo _VooRetorno;
+
+        #endregion
+
         #region Propriedades
 
-        public String Nome { get; set; }
+        /// <summary>
+        /// Nome do passageiro.
+        /// </summary>
+        public String Nome 
+        {
+            get { return _Nome; }
+            set 
+            {
+                if (_Nome == String.Empty)
+                {
+                    
+                }
+                else
+                {
+                    _Nome = value;
+                }
+            } 
+        }
+
         public String Documento { get; set; }
         public Voo VooChegada { get; set; }
         public Voo VooRetorno { get; set; }

@@ -81,7 +81,7 @@
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
-                <p>&copy; <%--Site Scripts--%>- Chronos Transfer Application</p>
+                <p>&copy; <%--Site Scripts--%>Chronos Transfer</p>
             </div>
         </div>
     </footer>
