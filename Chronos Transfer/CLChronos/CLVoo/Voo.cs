@@ -13,21 +13,46 @@ namespace ChronosTransfer.CLChronos.CLVoo
     public class Voo : Chronos
     {
         #region Construtores
-
-        public Voo() : base() {}
-
+        
         public Voo(String _Source) : base(_Source) {}
 
         #endregion
 
         #region Propriedades
 
-        public DateTime Data { get; set; }        
+        /// <summary>
+        /// Data do voo.
+        /// </summary>
+        public DateTime Data { get; set; }    
+    
+        /// <summary>
+        /// Cidade de origem (aeroporto)
+        /// </summary>
         public String CidadeOrigem { get; set; }
+
+        /// <summary>
+        /// Cidade de destino (aeroporto)
+        /// </summary>
         public String CidadeDestino { get; set; }
+
+        /// <summary>
+        /// Companhia aérea.
+        /// </summary>
         public String CompanhiaAerea { get; set; }
+
+        /// <summary>
+        /// Número do voo.
+        /// </summary>
         public String NumeroVoo { get; set; }
+
+        /// <summary>
+        /// Horário saida.
+        /// </summary>
         public DateTime HorarioSaida { get; set; }
+
+        /// <summary>
+        /// Horario chegada.
+        /// </summary>
         public DateTime HorarioChegada { get; set; }
         
         #endregion

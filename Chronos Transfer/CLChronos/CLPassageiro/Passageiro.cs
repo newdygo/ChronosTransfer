@@ -14,44 +14,31 @@ namespace ChronosTransfer.CLChronos.CLPassageiro
     public class Passageiro : Chronos
     {
         #region Construtores
-
-        public Passageiro() : base() {}
-
+        
         public Passageiro(String _Source) : base(_Source) {}
 
         #endregion
-
-        #region Variáveis
-
-        private String _Nome;
-        private Voo _VooChegada;
-        private Voo _VooRetorno;
-
-        #endregion
-
+        
         #region Propriedades
 
         /// <summary>
         /// Nome do passageiro.
         /// </summary>
-        public String Nome 
-        {
-            get { return _Nome; }
-            set 
-            {
-                if (_Nome == String.Empty)
-                {
-                    
-                }
-                else
-                {
-                    _Nome = value;
-                }
-            } 
-        }
+        public String Nome { get; set; }
 
+        /// <summary>
+        /// Documento de identidade.
+        /// </summary>
         public String Documento { get; set; }
+
+        /// <summary>
+        /// Voo de chegada.
+        /// </summary>
         public Voo VooChegada { get; set; }
+
+        /// <summary>
+        /// Voo de retorno.
+        /// </summary>
         public Voo VooRetorno { get; set; }
 
         #endregion       

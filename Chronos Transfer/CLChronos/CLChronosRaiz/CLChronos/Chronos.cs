@@ -14,9 +14,7 @@ namespace ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos
     public abstract class Chronos : Conexao
     {
         #region Construtores
-
-        public Chronos() : base() { }
-
+        
         public Chronos(String _Source) : base(_Source) {}
         
         #endregion

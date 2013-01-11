@@ -7,59 +7,99 @@ using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Collections.Generic;
 using ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos;
+using System.Data.SqlClient;
 
 namespace ChronosTransfer.CLChronos.CLBasico
 {
     public class Veiculo : Chronos
     {
         #region Construtores
-
-        public Veiculo() : base() {} 
-
+        
         public Veiculo(String _Source) : base(_Source) {}
-
-        public Veiculo(int _Capacidade) : base() 
-        {
-            if (_Capacidade <= 1)
-            {
-                Nome = "Moto";
-                Capacidade = 1;
-                ValorViagem = Convert.ToDecimal("150,00");
-            }
-            else if (_Capacidade <= 4)
-            {
-                Nome = "Carro";
-                Capacidade = 4;
-                ValorViagem = Convert.ToDecimal("350,00");
-            }
-            else if (_Capacidade <= 8)
-            {
-                Nome = "Mini Van";
-                Capacidade = 8;
-                ValorViagem = Convert.ToDecimal("700,00");
-            }
-            else if (_Capacidade <= 22)
-            {
-                Nome = "Micro Ônibus";
-                Capacidade = 22;
-                ValorViagem = Convert.ToDecimal("1000,00");
-            }
-            else if (_Capacidade <= 38)
-            {
-                Nome = "Ônibus";
-                Capacidade = 38;
-                ValorViagem = Convert.ToDecimal("1500,00");
-            }
-        }
 
         #endregion
 
         #region Propriedades
 
+        public Int32 IdVeiculo { get; set; }
+
+        /// <summary>
+        /// Nome do veículo.
+        /// </summary>
         public String Nome { get; set; }
+
+        /// <summary>
+        /// Capacidade suportada.
+        /// </summary>
         public int Capacidade { get; set; }
+
+        /// <summary>
+        /// Valor da viagem.
+        /// </summary>
         public Decimal ValorViagem { get; set; }
+
+        /// <summary>
+        /// Utilizado na cotação.
+        /// </summary>
+        public Boolean Utilizado { get; set; }
         
+        #endregion
+
+        #region Métodos
+
+        /// <summary>
+        /// Rotina utilizada para retornar a capacidade máxima dos carros cadastrados.
+        /// </summary>
+        /// <returns></returns>
+        public int GetCapacidadeMaxima()
+        {
+            using (ConectarSQL())
+            {
+                using (SqlCommand _Comand = new SqlCommand("Veiculo_GetCapacidadeMaxima", ConexaoSQL) { CommandType = CommandType.StoredProcedure })
+                {
+                    return Convert.ToInt32(_Comand.ExecuteScalar());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Rotina utilizada para carregar veiculo aproximado pela capacidade passada como parâmetro.
+        /// </summary>
+        /// <param name="_Capacidade"></param>
+        public Veiculo CarregarVeiculoCapacidade(int _Capacidade)
+        {
+            try
+            {
+                using (ConectarSQL())
+                {
+                    using (DataTable _Table = new DataTable())
+                    {
+                        using (SqlCommand _Comand = new SqlCommand("Veiculo_CarregarVeiculoCapacidade", ConexaoSQL) { CommandType = CommandType.StoredProcedure })
+                        {
+                            _Comand.Parameters.Add(new SqlParameter("@Capacidade", SqlDbType.Int) { Value = _Capacidade});
+
+                            _Table.Load(_Comand.ExecuteReader());
+
+                            if (_Table.Rows.Count > 0)
+                            {
+                                IdVeiculo = Convert.ToInt32(_Table.Rows[0][0]);
+                                Nome = _Table.Rows[0][1].ToString();
+                                Capacidade = Convert.ToInt32(_Table.Rows[0][2]);
+                                ValorViagem = Convert.ToInt32(_Table.Rows[0][3]);
+                                Utilizado = Convert.ToBoolean(_Table.Rows[0][4]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }
+
+            return this;
+        }
+
         #endregion
     }
 }

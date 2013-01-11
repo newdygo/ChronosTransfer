@@ -2,7 +2,6 @@
 using System.Web;
 using System.Data;
 using System.Linq;
-using System.Data.OleDb;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using System.Collections.Generic;
@@ -10,48 +9,24 @@ using ChronosTransfer.CLChronos.CLVoo;
 using ChronosTransfer.CLChronos.CLExcel;
 using ChronosTransfer.CLChronos.CLBasico;
 using ChronosTransfer.CLChronos.CLPassageiro;
-using ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos;
 using ChronosTransfer.CLChronos.CLChronosRaiz.CLLog;
+using ChronosTransfer.CLChronos.CLChronosRaiz.CLChronos;
 
 namespace ChronosTransfer.CLChronos.CLTransfer
 {
     public class Transfer : Chronos
     {
         #region Contrutores
-
-        public Transfer() : base() 
-        {
-            Passageiros = new List<Passageiro>();
-            Veiculo = new Veiculo();
-
-            _Veiculos = new List<Veiculo>();
-
-            _Veiculos.Add(new Veiculo() { Nome = "Moto", Capacidade = 1, ValorViagem = Convert.ToDecimal("350,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Carro", Capacidade = 4, ValorViagem = Convert.ToDecimal("350,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Mini Van", Capacidade = 8, ValorViagem = Convert.ToDecimal("700,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Micro Ônibus", Capacidade = 22, ValorViagem = Convert.ToDecimal("1000,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Ônibus", Capacidade = 38, ValorViagem = Convert.ToDecimal("1500,00") });
-        }
-        
+                
         public Transfer(String _Source) : base(_Source) 
         {
             Passageiros = new List<Passageiro>();
-            Veiculo = new Veiculo();
-
-            _Veiculos = new List<Veiculo>();
-
-            _Veiculos.Add(new Veiculo() { Nome = "Moto", Capacidade = 1, ValorViagem = Convert.ToDecimal("350,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Carro", Capacidade = 4, ValorViagem = Convert.ToDecimal("350,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Mini Van", Capacidade = 8, ValorViagem = Convert.ToDecimal("700,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Micro Ônibus", Capacidade = 22, ValorViagem = Convert.ToDecimal("1000,00") });
-            _Veiculos.Add(new Veiculo() { Nome = "Ônibus", Capacidade = 38, ValorViagem = Convert.ToDecimal("1500,00") });
+            Veiculo = new Veiculo(_Source);
         }
 
         #endregion
 
         #region Propriedades
-
-        List<Veiculo> _Veiculos;
 
         public String Nome { get; set; }
         public List<Passageiro> Passageiros { get; set; }
@@ -68,48 +43,48 @@ namespace ChronosTransfer.CLChronos.CLTransfer
         /// <returns></returns>
         public List<Transfer> GerarTransfers(String _Sheet)
         {
-            DataTable _Table = new Excel().RetornarTudoSheet(_Sheet);
-            
-            Passageiro _Passageiro = new Passageiro();
+            DataTable _Table = new Excel(Source).RetornarTudoSheet(_Sheet);
 
-            Voo _VooChegada = new Voo();
-            Voo _VooRetorno = new Voo();
+            Passageiro _Passageiro = new Passageiro(Source);
+
+            Voo _VooChegada = new Voo(Source);
+            Voo _VooRetorno = new Voo(Source);
 
             Char[] _Char = Environment.NewLine.ToCharArray();
-         
+
             foreach (DataRow _Row in _Table.Rows)
             {
                 try
                 {
-                    IFormatProvider _Culture = new System.Globalization.CultureInfo("pt-BR", true);
+                    //IFormatProvider _Culture = new System.Globalization.CultureInfo("pt-BR", true);
 
                     _Passageiro.Nome = _Row[0].ToString();
                     _Passageiro.Documento = _Row[1].ToString();
-                    
-                    _VooChegada.Data = DateTime.Parse(_Row[2].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+
+                    _VooChegada.Data = DateTime.Parse(_Row[2].ToString().Split(_Char).Last().ToString());
                     _VooChegada.CidadeOrigem = _Row[3].ToString().Split(_Char).Last().ToString();
                     _VooChegada.CidadeDestino = _Row[4].ToString().Split(_Char).Last().ToString();
                     _VooChegada.CompanhiaAerea = _Row[5].ToString().Split(_Char).Last().ToString();
                     _VooChegada.NumeroVoo = _Row[6].ToString().Split(_Char).Last().ToString();
-                    _VooChegada.HorarioSaida = DateTime.Parse(_Row[7].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
-                    _VooChegada.HorarioChegada = DateTime.Parse(_Row[8].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+                    _VooChegada.HorarioSaida = DateTime.Parse(_Row[7].ToString().Split(_Char).Last().ToString());
+                    _VooChegada.HorarioChegada = DateTime.Parse(_Row[8].ToString().Split(_Char).Last().ToString());
 
-                    _VooRetorno.Data = DateTime.Parse(_Row[10].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
-                    _VooRetorno.CidadeOrigem = _Row[11].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.CidadeDestino = _Row[12].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.CompanhiaAerea = _Row[13].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.NumeroVoo = _Row[14].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.HorarioSaida = DateTime.Parse(_Row[15].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
-                    _VooRetorno.HorarioChegada = DateTime.Parse(_Row[16].ToString().Split(_Char).Last().ToString(), _Culture, DateTimeStyles.None);
+                    _VooRetorno.Data = DateTime.Parse(_Row[9].ToString().Split(_Char).Last().ToString());
+                    _VooRetorno.CidadeOrigem = _Row[10].ToString().Split(_Char).Last().ToString();
+                    _VooRetorno.CidadeDestino = _Row[11].ToString().Split(_Char).Last().ToString();
+                    _VooRetorno.CompanhiaAerea = _Row[12].ToString().Split(_Char).Last().ToString();
+                    _VooRetorno.NumeroVoo = _Row[13].ToString().Split(_Char).Last().ToString();
+                    _VooRetorno.HorarioSaida = DateTime.Parse(_Row[14].ToString().Split(_Char).Last().ToString());
+                    _VooRetorno.HorarioChegada = DateTime.Parse(_Row[15].ToString().Split(_Char).Last().ToString());
 
                     _Passageiro.VooChegada = _VooChegada;
                     _Passageiro.VooRetorno = _VooRetorno;
 
                     Passageiros.Add(_Passageiro);
 
-                    _Passageiro = new Passageiro();
-                    _VooChegada = new Voo();
-                    _VooRetorno = new Voo();
+                    _Passageiro = new Passageiro(Source);
+                    _VooChegada = new Voo(Source);
+                    _VooRetorno = new Voo(Source);
                 }
                 catch
                 {
@@ -117,8 +92,6 @@ namespace ChronosTransfer.CLChronos.CLTransfer
                     //Não exibir o resultado caso o log seja maior que 0. exibir o log.
 
                     LogErro _Erro = new LogErro();
-
-                    
 
                     continue;
                 }
@@ -131,30 +104,42 @@ namespace ChronosTransfer.CLChronos.CLTransfer
 
             foreach (IGrouping<String, Passageiro> _PassageiroOrdenado in _PassageirosAgrupados)
             {
-                Transfer _Transfer = new Transfer();
+                Transfer _Transfer = new Transfer(Source);
+                int _CapacidadeMax = Veiculo.GetCapacidadeMaxima();
 
-                if (_PassageiroOrdenado.Count() > _Veiculos.Max(x => x.Capacidade))
+                if (_PassageiroOrdenado.Count() > _CapacidadeMax)
                 {
                     List<Passageiro> _PassageirosTemp = _PassageiroOrdenado.ToList();
 
-                    for (int i = 1; i < _PassageirosTemp.Count / _Veiculos.Max(x => x.Capacidade); i++)
+                    int _Max = (_PassageirosTemp.Count / _CapacidadeMax);
+
+                    for (int i = 0; i <= _Max; i++)
                     {
                         _Transfer.Nome = String.Format("Transfer {0}.{1}", _PassageirosAgrupados.IndexOf(_PassageiroOrdenado) + 1, i);
-                        _Transfer.Passageiros = _PassageirosTemp.Take(_Veiculos.Max(x => x.Capacidade)).ToList();
-                        _Transfer.Veiculo = new Veiculo(_Transfer.Passageiros.Count);
+
+                        if (_PassageirosTemp.Count > _CapacidadeMax)
+                        {
+                            _Transfer.Passageiros = _PassageirosTemp.Take(_CapacidadeMax).ToList();
+                        }
+                        else
+                        {
+                            _Transfer.Passageiros = _PassageirosTemp.Take(_PassageirosTemp.Count).ToList();
+                        }
+
+                        _Transfer.Veiculo = new Veiculo(Source).CarregarVeiculoCapacidade(_Transfer.Passageiros.Count);
 
                         _Transfers.Add(_Transfer);
 
                         _PassageirosTemp.RemoveRange(0, _Transfer.Passageiros.Count);
 
-                        _Transfer = new Transfer();
-                    }                    
+                        _Transfer = new Transfer(Source);
+                    }
                 }
                 else
                 {
                     _Transfer.Nome = String.Format("Transfer {0}", _PassageirosAgrupados.IndexOf(_PassageiroOrdenado) + 1);
                     _Transfer.Passageiros = _PassageiroOrdenado.ToList();
-                    _Transfer.Veiculo = new Veiculo(_Transfer.Passageiros.Count);
+                    _Transfer.Veiculo = new Veiculo(Source).CarregarVeiculoCapacidade(_Transfer.Passageiros.Count);
 
                     _Transfers.Add(_Transfer);
                 }

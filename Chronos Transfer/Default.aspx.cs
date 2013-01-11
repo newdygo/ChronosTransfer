@@ -5,14 +5,12 @@ using System.Web;
 using System.Linq;
 using System.Data;
 using System.Web.UI;
-using System.Data.OleDb;
+using OfficeOpenXml;
 using System.Net.Sockets;
 using System.Web.UI.WebControls;
 using System.Collections.Generic;
 using ChronosTransfer.CLChronos.CLExcel;
-using Exc = Microsoft.Office.Interop.Excel;
 using ChronosTransfer.CLChronos.CLTransfer;
-using ChronosTransfer.CLChronos.CLPassageiro;
 
 namespace ChronosTransfer
 {
@@ -32,7 +30,8 @@ namespace ChronosTransfer
         {
             CreateLinkDownload();
         }
-
+        ExcelWorkbook _oo;
+        ExcelWorksheets ws; ExcelRange wss; String value; object[,] kk; int d1; int d2; ExcelWorksheet pp; object ll;
         /// <summary>
         /// Rotina utilizada no click do botão Upload, que faz a cópia do arquivo local para o servidor e exibe as Sheets que existem no arquivo Excel.
         /// </summary>
@@ -41,6 +40,44 @@ namespace ChronosTransfer
         protected void btnUpload_Click(object sender, EventArgs e)
         {
             CopiarArquivo();
+
+            //using (ExcelPackage pck = new ExcelPackage(new FileInfo(Path.GetTempPath() + "Transfer.xlsx")))
+            //{
+            //    _oo = pck.Workbook;
+                              
+            //    //Create the worksheet
+            //    ws = pck.Workbook.Worksheets;
+
+
+
+            //    //foreach (ExcelRangeBase _Row in pck.Workbook.Worksheets[1].SelectedRange["A3:Q14"])
+            //    //{
+            //    //    value = _Row.Value.ToString();
+            //    //}
+            //    try
+            //    {
+            //        pp = ws[2];
+            //    }
+            //    catch (Exception)
+            //    {                    
+            //        throw;
+            //    }
+                
+
+            //    //ll = pp.Dimension;
+
+            //    //wss = ws[2].SelectedRange["A3:Q14"].Where(x => x.Value != String.Empty).ToList();
+
+            //    kk = (object[,])wss.Value;
+
+            //    d1 = kk.GetLength(0);
+            //    d2 = kk.GetLength(1);
+                
+            //    foreach (var ccc in wss)
+            //    {
+            //        value = wss.Value.ToString();
+            //    }
+            //}            
         }
 
         /// <summary>
@@ -109,6 +146,8 @@ namespace ChronosTransfer
 
         #region Métodos
 
+        #region Upload
+
         /// <summary>
         /// Rotina utilizada para verificar a extensao de um arquivo e copia-lo para pasta temporária do servidor.
         /// </summary>
@@ -116,9 +155,9 @@ namespace ChronosTransfer
         {
             if (FileTransfer.HasFile)
             {
-                FileName = String.Format("{0}Transfer.xls", Path.GetTempPath());
+                FileName = String.Format("{0}Transfer.xlsx", Path.GetTempPath());
 
-                if (Path.GetExtension(FileTransfer.FileName).ToLower() == ".xls")
+                if (Path.GetExtension(FileTransfer.FileName).ToLower() == ".xlsx")
                 {
                     if (File.Exists(FileName))
                     {
@@ -157,7 +196,7 @@ namespace ChronosTransfer
             else
             {
                 lblStatusUpload.Text = "Arquivo que tentou ser carregado não é um Excel válido!";
-            }            
+            }
         }
 
         /// <summary>
@@ -165,26 +204,15 @@ namespace ChronosTransfer
         /// </summary>
         private void CarregarSchema()
         {
-            gridSheets.DataSource = new Excel().RetornarSchema(OleDbSchemaGuid.Tables_Info);
+            gridSheets.DataSource = new Excel(FileName).RetornarSchema();
             gridSheets.DataBind();
-                        
-            HabilitarComponente(true);            
+
+            HabilitarComponente(true);
         }
 
-        /// <summary>
-        /// Rotina utilizada para habilitar os botões de comando do upload e processamento.
-        /// </summary>
-        /// <param name="_Ativa"></param>
-        private void HabilitarComponente(Boolean _Ativa)
-        {
-            btnProcessar.Visible = _Ativa;
-            btnUpload.Visible = !_Ativa;
-            
-            gridSheets.Visible = _Ativa;
-            gridVooChegada.Visible = !_Ativa;
+        #endregion
 
-            lblStatusUpload.Visible = !_Ativa;
-        }
+        #region Processamento
 
         private void ProcessarArquivo()
         {
@@ -194,11 +222,11 @@ namespace ChronosTransfer
 
                 if (_CheckBox.Checked)
                 {
-                    Transfer _Transfer = new Transfer();
+                    Transfer _Transfer = new Transfer(FileName);
 
                     List<Transfer> _Transfers = _Transfer.GerarTransfers(_Row.Cells[1].Text);
 
-                    Excel _Excel = new Excel();
+                    Excel _Excel = new Excel(FileName);
 
                     _Excel.CreateSheet(_Row.Cells[1].Text);
 
@@ -220,6 +248,25 @@ namespace ChronosTransfer
             HabilitarComponente(false);            
         }
 
+        #endregion
+
+        #region Outros
+
+        /// <summary>
+        /// Rotina utilizada para habilitar os botões de comando do upload e processamento.
+        /// </summary>
+        /// <param name="_Ativa"></param>
+        private void HabilitarComponente(Boolean _Ativa)
+        {
+            btnProcessar.Visible = _Ativa;
+            btnUpload.Visible = !_Ativa;
+            
+            gridSheets.Visible = _Ativa;
+            gridVooChegada.Visible = !_Ativa;
+
+            lblStatusUpload.Visible = !_Ativa;
+        }        
+
         /// <summary>
         /// Rotina utilizada para criar o link de download do arquivo gerado pelo transfer.
         /// </summary>
@@ -235,6 +282,8 @@ namespace ChronosTransfer
                 LinkToDownload.Controls.Add(_LinkButton);
             }
         }
+
+        #endregion
 
         #endregion
     }
