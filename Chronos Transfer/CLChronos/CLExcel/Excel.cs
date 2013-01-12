@@ -267,11 +267,11 @@ namespace ChronosTransfer.CLChronos.CLExcel
 
                     _WorkSheet.Cells[String.Format("B{0}", _Start)].Value = _Passageiro.Nome;
                     _WorkSheet.Cells[String.Format("C{0}", _Start)].Value = _Passageiro.Documento;
-                    _WorkSheet.Cells[String.Format("D{0}", _Start)].Value = _Passageiro.VooChegada.NumeroVoo;
-                    _WorkSheet.Cells[String.Format("E{0}", _Start)].Value = _Passageiro.VooChegada.CidadeOrigem;
-                    _WorkSheet.Cells[String.Format("F{0}", _Start)].Value = _Passageiro.VooChegada.CidadeDestino;
-                    _WorkSheet.Cells[String.Format("H{0}", _Start)].Value = _Passageiro.VooChegada.HorarioSaida.ToShortTimeString();
-                    _WorkSheet.Cells[String.Format("I{0}", _Start)].Value = _Passageiro.VooChegada.HorarioChegada.ToShortTimeString();
+                    _WorkSheet.Cells[String.Format("D{0}", _Start)].Value = _Passageiro.VooRetorno.NumeroVoo;
+                    _WorkSheet.Cells[String.Format("E{0}", _Start)].Value = _Passageiro.VooRetorno.CidadeOrigem;
+                    _WorkSheet.Cells[String.Format("F{0}", _Start)].Value = _Passageiro.VooRetorno.CidadeDestino;
+                    _WorkSheet.Cells[String.Format("H{0}", _Start)].Value = _Passageiro.VooRetorno.HorarioSaida.ToShortTimeString();
+                    _WorkSheet.Cells[String.Format("I{0}", _Start)].Value = _Passageiro.VooRetorno.HorarioChegada.ToShortTimeString();
                 }
 
                 if (ConexaoEx.Stream.CanWrite)

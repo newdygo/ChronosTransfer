@@ -16,8 +16,7 @@ namespace ChronosTransfer
 {
     public partial class _Default : Page
     {
-        public static String FileName { get; set; }
-        static Boolean Pronto = false;
+        private static String FileName { get; set; }
 
         #region Eventos
 
@@ -30,8 +29,7 @@ namespace ChronosTransfer
         {
             CreateLinkDownload();
         }
-        ExcelWorkbook _oo;
-        ExcelWorksheets ws; ExcelRange wss; String value; object[,] kk; int d1; int d2; ExcelWorksheet pp; object ll;
+
         /// <summary>
         /// Rotina utilizada no click do botão Upload, que faz a cópia do arquivo local para o servidor e exibe as Sheets que existem no arquivo Excel.
         /// </summary>
@@ -97,7 +95,12 @@ namespace ChronosTransfer
         /// <param name="e"></param>
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
+            Session["TransferExibicaoChegada"] = null;
+            Session["LinkDownload"] = null;
+
             HabilitarComponente(false);
+
+            gridVooChegada.DataSource = null;
         }
 
         /// <summary>
@@ -107,8 +110,6 @@ namespace ChronosTransfer
         /// <param name="e"></param>
         protected void LinkButton_Click(object sender, EventArgs e)
         {
-            Pronto = false;
-
             FileInfo _File = new FileInfo(FileName);
 
             if (_File.Exists)
@@ -116,8 +117,8 @@ namespace ChronosTransfer
                 Response.Clear();
                 Response.AddHeader("Content-Disposition", String.Format("attachment; filename = Processado_{0}", _File.Name));
 
-                //Response.AddHeader("Content-Length", _File.Length.ToString());
-                //Response.ContentType = "application/octet-stream";
+                Response.AddHeader("Content-Length", _File.Length.ToString());
+                Response.ContentType = "application/octet-stream";
 
                 Response.WriteFile(_File.FullName);
                 Response.End();
@@ -236,12 +237,14 @@ namespace ChronosTransfer
                         _Excel.InsertPassageiroSheetRetorno(_Row.Cells[1].Text, _TransferTemp);
                     }
 
-                    gridVooChegada.DataSource = new TransferExibicaoChegada().GetExibicaoChegada(_Transfers);
+                    Session["TransferExibicaoChegada"] = new TransferExibicaoChegada().GetExibicaoChegada(_Transfers);
+
+                    gridVooChegada.DataSource = (List<TransferExibicaoChegada>)(Session["TransferExibicaoChegada"]);
                     gridVooChegada.DataBind();
                 }
             }
 
-            Pronto = true;
+            Session["LinkDownload"] = String.Format("Download Transfer Planilha 'Processado_{0}'", Path.GetFileName(FileName));
 
             CreateLinkDownload();
 
@@ -272,18 +275,28 @@ namespace ChronosTransfer
         /// </summary>
         private void CreateLinkDownload()
         {
-            if (Pronto)
-            {
-                LinkButton _LinkButton = new LinkButton();
+            LinkButton _LinkButton = new LinkButton();
 
-                _LinkButton.Text = String.Format("Download Transfer Planilha 'Processado_{0}'", Path.GetFileName(FileName));
-                _LinkButton.Click += new EventHandler(LinkButton_Click);
+            _LinkButton.Text = Convert.ToString(Session["LinkDownload"]); //  == null ? null : Session["LinkDownload"].ToString();
+            _LinkButton.Click += new EventHandler(LinkButton_Click);
 
-                LinkToDownload.Controls.Add(_LinkButton);
-            }
+            LinkToDownload.Controls.Add(_LinkButton);
         }
 
         #endregion
+
+        /// <summary>
+        /// Rotina utilizada para realizar a paginação do gridview com os dados da lista de transfers.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void gridVooChegada_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridVooChegada.PageIndex = e.NewPageIndex;
+
+            gridVooChegada.DataSource = (List<TransferExibicaoChegada>)(Session["TransferExibicaoChegada"]);
+            gridVooChegada.DataBind();
+        }   
 
         #endregion
     }

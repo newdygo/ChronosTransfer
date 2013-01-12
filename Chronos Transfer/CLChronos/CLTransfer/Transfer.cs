@@ -69,13 +69,13 @@ namespace ChronosTransfer.CLChronos.CLTransfer
                     _VooChegada.HorarioSaida = DateTime.Parse(_Row[7].ToString().Split(_Char).Last().ToString());
                     _VooChegada.HorarioChegada = DateTime.Parse(_Row[8].ToString().Split(_Char).Last().ToString());
 
-                    _VooRetorno.Data = DateTime.Parse(_Row[9].ToString().Split(_Char).Last().ToString());
-                    _VooRetorno.CidadeOrigem = _Row[10].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.CidadeDestino = _Row[11].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.CompanhiaAerea = _Row[12].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.NumeroVoo = _Row[13].ToString().Split(_Char).Last().ToString();
-                    _VooRetorno.HorarioSaida = DateTime.Parse(_Row[14].ToString().Split(_Char).Last().ToString());
-                    _VooRetorno.HorarioChegada = DateTime.Parse(_Row[15].ToString().Split(_Char).Last().ToString());
+                    _VooRetorno.Data = DateTime.Parse(_Row[9].ToString().Split(_Char).First().ToString());
+                    _VooRetorno.CidadeOrigem = _Row[10].ToString().Split(_Char).First().ToString();
+                    _VooRetorno.CidadeDestino = _Row[11].ToString().Split(_Char).First().ToString();
+                    _VooRetorno.CompanhiaAerea = _Row[12].ToString().Split(_Char).First().ToString();
+                    _VooRetorno.NumeroVoo = _Row[13].ToString().Split(_Char).First().ToString();
+                    _VooRetorno.HorarioSaida = DateTime.Parse(_Row[14].ToString().Split(_Char).First().ToString());
+                    _VooRetorno.HorarioChegada = DateTime.Parse(_Row[15].ToString().Split(_Char).First().ToString());
 
                     _Passageiro.VooChegada = _VooChegada;
                     _Passageiro.VooRetorno = _VooRetorno;

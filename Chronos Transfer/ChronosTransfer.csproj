@@ -191,6 +191,10 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Images\accent.png" />
+    <Content Include="Images\ArrowLeftDouble_16x16.png" />
+    <Content Include="Images\ArrowLeft_16x16.png" />
+    <Content Include="Images\ArrowRightDouble_16x16.png" />
+    <Content Include="Images\ArrowRight_16x16.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\Chronos_100x274.png" />
     <Content Include="Images\heroAccent.png" />

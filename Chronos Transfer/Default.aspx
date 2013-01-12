@@ -50,7 +50,8 @@
                 </Columns>
             </asp:GridView>
 
-            <asp:GridView Width="1000px" ID="gridVooChegada" runat="server" AutoGenerateColumns="False" Visible="False">
+            <asp:GridView Width="1000px" ID="gridVooChegada" runat="server" AutoGenerateColumns="False" CellPadding="4" AllowPaging="True" GridLines="None" OnPageIndexChanging="gridVooChegada_PageIndexChanging" PageSize="8" ForeColor="#333333">
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
                     <asp:BoundField HeaderStyle-Width="200" DataField="Nome" HeaderText="Nome" >
 <HeaderStyle Width="200px"></HeaderStyle>
@@ -77,6 +78,17 @@
 <HeaderStyle Width="150px"></HeaderStyle>
                     </asp:BoundField>
                 </Columns>
+                <EditRowStyle BackColor="#999999" />
+                <FooterStyle BackColor="#5D7B9D" ForeColor="White" Font-Bold="True" />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <PagerSettings FirstPageImageUrl="~/Images/ArrowLeftDouble_16x16.png" LastPageImageUrl="~/Images/ArrowRightDouble_16x16.png" Mode="NextPreviousFirstLast" NextPageImageUrl="~/Images/ArrowRight_16x16.png" PreviousPageImageUrl="~/Images/ArrowLeft_16x16.png" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
             </asp:GridView>
 
             <br /><br />
